@@ -27,7 +27,7 @@ const NavBar = () => {
     <div className='border navbar absolute z-[1] flex justify-center rounded-full bg-white shadow-2xl p-2'>
       <div className='flex gap-10  font-semibold cursor-pointer'>
         <Dropdown
-          arrow={true}
+          arrow
           placement='bottomCenter'
           className='sm:text-xl'
           menu={{ items }}
@@ -35,7 +35,7 @@ const NavBar = () => {
           <Space className={`${spaceClass}`}>Laptops</Space>
         </Dropdown>
         <Dropdown
-          arrow={true}
+          arrow
           placement='bottomCenter'
           className='sm:text-xl'
           menu={{ items }}
@@ -43,7 +43,7 @@ const NavBar = () => {
           <Space className={`${spaceClass}`}>Desktops</Space>
         </Dropdown>
         <Dropdown
-          arrow={true}
+          arrow
           placement='bottomCenter'
           className='sm:text-xl'
           menu={{ items }}
