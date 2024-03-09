@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.navbar {
+  width: 450px;
+  left: 50%;
+  top: 30px;
+  transform: translate(-50%);
+}
