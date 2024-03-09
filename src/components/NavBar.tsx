@@ -24,7 +24,7 @@ const spaceClass = 'hover:bg-gray-100 px-4 py-3 rounded-full';
 
 const NavBar = () => {
   return (
-    <div className='border navbar absolute z-[1] flex justify-center rounded-full bg-white shadow-2xl p-2'>
+    <div className='border navbar absolute z-[1] flex justify-center rounded-full bg-white shadow-2xl p-2 px-3'>
       <div className='flex gap-10  font-semibold cursor-pointer'>
         <Dropdown
           arrow
