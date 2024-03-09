@@ -29,7 +29,7 @@ const NavBar = () => {
         <Dropdown
           arrow={true}
           placement='bottomCenter'
-          className='text-xl'
+          className='sm:text-xl'
           menu={{ items }}
         >
           <Space className={`${spaceClass}`}>Laptops</Space>
@@ -37,7 +37,7 @@ const NavBar = () => {
         <Dropdown
           arrow={true}
           placement='bottomCenter'
-          className='text-xl'
+          className='sm:text-xl'
           menu={{ items }}
         >
           <Space className={`${spaceClass}`}>Desktops</Space>
@@ -45,7 +45,7 @@ const NavBar = () => {
         <Dropdown
           arrow={true}
           placement='bottomCenter'
-          className='text-xl'
+          className='sm:text-xl'
           menu={{ items }}
         >
           <Space className={`${spaceClass}`}>Mobiles</Space>

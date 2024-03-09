@@ -8,3 +8,10 @@
   top: 30px;
   transform: translate(-50%);
 }
+
+@media screen and (max-width: 640px) {
+  .navbar {
+    width: 350px;
+    gap: 1px;
+  }
+}
