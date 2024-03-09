@@ -10,9 +10,8 @@ export function SignupFormDemo() {
     console.log('Form submitted');
   };
   return (
-    <div className='px-[10px] h-screen w-full dark:bg-black bg-white dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex items-center justify-center'>
-      <div className='absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_50%,black)]'></div>
-      <div className='shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>
+    <div className='px-[10px] h-screen'>
+      <div className='mt-[60px] shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>
         <h2 className='font-bold text-xl'>Welcome to Aceternity</h2>
 
         <form
