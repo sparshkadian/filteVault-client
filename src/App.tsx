@@ -1,22 +1,19 @@
 import { Routes, Route } from 'react-router-dom';
 import Hero from './pages/Hero';
-import NavBar from './components/NavBar';
-import { SignupFormDemo } from './pages/Signup';
+import { Signup } from './pages/Signup';
+import { Login } from './pages/Login';
+import { NavBar } from './components/Navbar';
 
 const App = () => {
   return (
-    <Routes>
-      <Route
-        path='/'
-        element={
-          <div className='h-screen w-screen relative'>
-            <NavBar />
-            <Hero />
-          </div>
-        }
-      />
-      <Route path='/signup' element={<SignupFormDemo />} />
-    </Routes>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path='/' element={<Hero />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/login' element={<Login />} />
+      </Routes>
+    </>
   );
 };
 

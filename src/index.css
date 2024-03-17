@@ -2,16 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-.navbar {
-  width: 450px;
-  left: 50%;
-  top: 30px;
-  transform: translate(-50%);
+/* HERO */
+
+.hero__textContainer {
+  @apply py-5 max-w-5xl flex flex-col items-center;
 }
 
-@media screen and (max-width: 640px) {
-  .navbar {
-    width: 350px;
-    gap: 1px;
-  }
+.hero__textTagline {
+  @apply -mt-6 sm:-mt-4 text-center text-xl sm:text-3xl px-2 font-semibold w-4/5;
+}
+
+/* NAVBAR*/
+
+.nav__button {
+  --b: 3px; /* border thickness */
+  --s: 0.45em; /* size of the corner */
+  --color: #373b44;
+
+  padding: calc(0.5em + var(--s)) calc(0.9em + var(--s));
+  color: var(--color);
+  --_p: var(--s);
+  background: conic-gradient(
+      from 90deg at var(--b) var(--b),
+      #0000 90deg,
+      var(--color) 0
+    )
+    var(--_p) var(--_p) / calc(100% - var(--b) - 2 * var(--_p))
+    calc(100% - var(--b) - 2 * var(--_p));
+  transition: 0.3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: 0.6em;
+  font-size: 16px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.nav__button:hover,
+.nav__button:focus-visible {
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: 0.05em;
+}
+
+.nav__button:active {
+  background: var(--color);
+  color: #fff;
 }

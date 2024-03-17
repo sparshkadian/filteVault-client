@@ -4,7 +4,7 @@ import { Label } from '../components/ui/label';
 import { cn } from '../utils/cn';
 import { IconBrandGoogle } from '@tabler/icons-react';
 
-export function Signup() {
+export function Login() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Form submitted');

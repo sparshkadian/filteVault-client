@@ -1,8 +1,9 @@
-import { MenuProps } from 'antd';
-
-export const items: MenuProps['items'] = [
+export const heroText = [
   {
-    key: 1,
-    label: 'Loda',
+    text: 'File',
+  },
+  {
+    text: 'Vault',
+    className: 'text-blue-500 dark:text-blue-500',
   },
 ];
