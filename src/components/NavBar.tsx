@@ -3,7 +3,7 @@ import NavbarDrawer from './NavbarDrawer';
 import { useContext } from 'react';
 import AppContext from '../context/AppContext';
 
-const Navbar = () => {
+const NavBar = () => {
   const { currentUser } = useContext(AppContext);
   const location = useLocation();
 
@@ -41,4 +41,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBar;

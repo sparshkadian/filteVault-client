@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import NavBar from './components/NavBar';
 import Hero from './pages/Hero';
 import Home from './pages/Home';
 import { Signup } from './pages/Signup';
@@ -9,7 +9,7 @@ import Protected from './components/Protected';
 const App = () => {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <Routes>
         <Route path='/' element={<Hero />} />
         <Route
