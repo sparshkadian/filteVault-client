@@ -9,6 +9,7 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [barsClicked, setBarsClicked] = useState(false);
+  console.log(open);
 
   window.addEventListener('resize', () => {
     setWidth(window.innerWidth);
