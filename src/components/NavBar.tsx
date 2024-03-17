@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 
-export const NavBar = () => {
+const Navbar = () => {
   const location = useLocation();
 
   return (
@@ -19,3 +19,5 @@ export const NavBar = () => {
     </div>
   );
 };
+
+export default Navbar;
