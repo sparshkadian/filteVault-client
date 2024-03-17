@@ -9,7 +9,7 @@
 }
 
 .hero__textTagline {
-  @apply -mt-6 sm:-mt-4 text-center text-xl sm:text-3xl px-2 font-semibold w-4/5;
+  @apply -mt-6 sm:-mt-4 text-center text-xl sm:text-3xl px-2 font-semibold w-[95%] sm:w-4/5;
 }
 
 /* NAVBAR*/

@@ -3,51 +3,78 @@ import { Input } from '../components/ui/input';
 import { Label } from '../components/ui/label';
 import { cn } from '../utils/cn';
 import { IconBrandGoogle } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 export function Login() {
+  const [formData, setFormData] = useState<{
+    email: string;
+    password: string;
+  }>({
+    password: '',
+    email: '',
+  });
+  const { email, password } = formData;
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Form submitted');
   };
   return (
     <div className='px-[10px]'>
-      <div className='mt-[120px] shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>
+      <div className='mt-[100px] shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>
         <h2 className='font-bold text-xl'>
-          Welcome to File <span className='text-blue-500'>Vault</span>
+          Welcome Back to File <span className='text-blue-500'>Vault</span>
         </h2>
 
         <form
           className='pt-2 pb-4 mt-5 flex flex-col gap-5'
           onSubmit={handleSubmit}
         >
-          <div className='flex flex-col'>
-            <LabelInputContainer>
-              <Label htmlFor='username'>userName</Label>
-              <Input id='username' placeholder='Tyler' type='text' />
-            </LabelInputContainer>
-          </div>
           <div>
             <LabelInputContainer>
               <Label htmlFor='email'>Email Address</Label>
               <Input
+                onChange={handleInputChange}
                 id='email'
                 placeholder='projectmayhem@fc.com'
                 type='email'
+                value={email}
               />
             </LabelInputContainer>
           </div>
           <div>
             <LabelInputContainer>
               <Label htmlFor='password'>Password</Label>
-              <Input id='password' placeholder='••••••••' type='password' />
+              <Input
+                onChange={handleInputChange}
+                id='password'
+                placeholder='••••••••'
+                type='password'
+                value={password}
+              />
             </LabelInputContainer>
           </div>
+
+          <p>
+            don't have an account?{' '}
+            <Link to='/signup' className='text-blue-500 font-semibold'>
+              Sign up
+            </Link>
+          </p>
 
           <button
             className='bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]'
             type='submit'
           >
-            Sign up &rarr;
+            Log in &rarr;
             <BottomGradient />
           </button>
 
@@ -55,7 +82,7 @@ export function Login() {
           <div className='flex flex-col space-y-4'>
             <button
               className=' relative group/btn flex space-x-2 items-center justify-center px-4 w-full text-black rounded-md h-10 font-medium shadow-input bg-gray-50 dark:bg-zinc-900 dark:shadow-[0px_0px_1px_1px_var(--neutral-800)]'
-              type='submit'
+              type='button'
             >
               <IconBrandGoogle className='h-5 w-5 text-neutral-800 dark:text-neutral-300' />
               <span className='text-neutral-700 dark:text-neutral-300 text-md'>
