@@ -10,6 +10,51 @@ export const heroText = [
 
 export const files = [
   {
-    fileName: '',
+    fileName: 'PDF File',
+    type: 'pdf',
+    image: './pdf-placeholder.png',
+  },
+
+  {
+    fileName: 'Image File',
+    type: 'png',
+    image: './img-placeholder.png',
+  },
+
+  {
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File 2',
+    type: 'word',
+    image: './word-placeholder.png',
   },
 ];
