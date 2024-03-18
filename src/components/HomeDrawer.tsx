@@ -8,20 +8,20 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
   const [barsClicked, setBarsClicked] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  // Comments to remove deploy error
   console.log(file);
+  console.log(open);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
     }
   };
-  console.log(open);
 
   window.addEventListener('resize', () => {
     setWidth(window.innerWidth);
   });
-
-  // setBarsClicked need to be set to false again when width > 640
 
   const showDrawer = () => {
     setBarsClicked(true);

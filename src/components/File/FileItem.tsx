@@ -7,15 +7,42 @@ interface FileProps {
   image: string;
 }
 
-const FileItem: React.FC<{ file: FileProps }> = ({ file }) => {
+const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
+  file,
+  layout,
+}) => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
 
   return (
-    <div className='relative bg-gray-100 rounded-md shadow-md py-3 w-[250px] h-[250px] flex flex-col items-center'>
+    <div
+      className={`${
+        layout === 'list' ? 'grid grid-cols-3' : 'w-[250px] h-[250px]'
+      }  relative bg-gray-100 rounded-md shadow-md py-3  flex flex-col items-center`}
+    >
       {/* test Div */}
       <div ref={divRef} className='absolute inset-0' />
 
+      <img
+        src={file.image}
+        alt='file-image'
+        className={`${
+          layout === 'list'
+            ? 'w-[40px] h-[40px] ml-2'
+            : 'mt- 4 h-[170px] w-[200px] rounded-md'
+        } object-cover`}
+      />
+      <p
+        className={`${
+          layout !== 'list'
+            ? 'h-[30px] mt-4 font-semibold text-lg w-full text-center overflow-hidden'
+            : 'text-lg text-center'
+        } `}
+      >
+        {file.fileName}
+      </p>
+
+      {/* FileOptions */}
       <img
         onClick={() => {
           if (divRef.current) {
@@ -28,16 +55,10 @@ const FileItem: React.FC<{ file: FileProps }> = ({ file }) => {
         src='./fileOptions.png'
         alt='options'
         width={20}
-        className='absolute right-1 cursor-pointer'
+        className={`${
+          layout === 'list' ? 'static ml-[120px]' : 'absolute right-1'
+        } cursor-pointer z-10`}
       />
-      <img
-        src={file.image}
-        alt='file-image'
-        className='mt-4 object-cover h-[170px] w-[200px] rounded-md'
-      />
-      <p className='h-[30px] mt-2 font-semibold text-lg w-full text-center overflow-hidden'>
-        {file.fileName}
-      </p>
 
       {openFileOptions && (
         <AnimatePresence>

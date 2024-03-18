@@ -4,7 +4,7 @@ import HomeDrawer from '../components/HomeDrawer';
 
 const Home = () => {
   return (
-    <div className='sm:bg-gray-100/70 flex h-screen relative'>
+    <div className='860:bg-gray-100/70 flex h-screen relative'>
       <HomeDrawer icon='./bars.png' />
       <HomeSideMenu />
       <FileGallery />

@@ -26,34 +26,58 @@ export const files = [
     type: 'word',
     image: './word-placeholder.png',
   },
-
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },
   {
-    fileName: 'Word File 2',
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File',
+    type: 'word',
+    image: './word-placeholder.png',
+  },
+  {
+    fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',
   },

@@ -3,7 +3,7 @@ import FileList from './File/FileList';
 import { useState } from 'react';
 
 const FileGallery = () => {
-  const [layout, setLayout] = useState('');
+  const [layout, setLayout] = useState('grid');
 
   return (
     <div className='bg-white mt-10 flex-1 rounded-tl-md p-2'>
@@ -46,8 +46,8 @@ const FileGallery = () => {
         </div>
       </div>
 
-      <div className='h-[75vh] sm:mx-5 mt-10 p-5 overflow-y-scroll flex justify-center'>
-        <FileList />
+      <div className='h-[70vh] sm:mx-5 mt-10 p-5 overflow-y-scroll flex justify-center'>
+        <FileList layout={layout} />
       </div>
     </div>
   );
