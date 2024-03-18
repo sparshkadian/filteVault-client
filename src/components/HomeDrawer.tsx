@@ -45,7 +45,7 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
         alt='bars'
         width={18}
         onClick={showDrawer}
-        className='cursor-pointer absolute top-3 left-3 block sm:hidden'
+        className='cursor-pointer absolute top-3 left-3 block 860:hidden'
       />
       <Drawer
         onClose={onClose}
@@ -93,17 +93,17 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
             <p>Profile</p>
           </Link>
 
-          {/* Trash */}
-          <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
-            <img src='./trash.png' alt='trash' width={18} />
-            <p>Trash</p>
-          </div>
-
           {/* starred */}
           <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
             <img src='./star.png' alt='trash' width={15} />
             <p>Starred</p>
           </div>
+        </div>
+
+        {/* Trash */}
+        <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
+          <img src='./trash.png' alt='trash' width={18} />
+          <p>Trash</p>
         </div>
       </Drawer>
     </>

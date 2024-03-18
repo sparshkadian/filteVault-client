@@ -46,7 +46,7 @@ const FileGallery = () => {
         </div>
       </div>
 
-      <div className='h-[75vh] sm:mx-5 mt-10 p-5 overflow-y-scroll'>
+      <div className='h-[75vh] sm:mx-5 mt-10 p-5 overflow-y-scroll flex justify-center'>
         <FileList />
       </div>
     </div>

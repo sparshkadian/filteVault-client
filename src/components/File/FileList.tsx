@@ -3,7 +3,7 @@ import FileItem from './FileItem';
 
 const FileList = () => {
   return (
-    <div className='flex gap-10 flex-wrap'>
+    <div className='grid grid-cols-1 600:grid-cols-2 xl:grid-cols-3 gap-10'>
       {files.map((file, i) => (
         <FileItem key={i} file={file} />
       ))}
