@@ -13,7 +13,7 @@ const initialState: initState = {
 const AppContext = createContext(initialState);
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState(false);
+  const [currentUser, setCurrentUser] = useState(true);
 
   return (
     <AppContext.Provider value={{ currentUser, setCurrentUser }}>

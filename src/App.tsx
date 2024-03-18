@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Hero from './pages/Hero';
 import Home from './pages/Home';
@@ -7,9 +7,10 @@ import { Login } from './pages/Login';
 import Protected from './components/Protected';
 
 const App = () => {
+  const location = useLocation();
   return (
     <>
-      <NavBar />
+      {location.pathname !== '/home' && <NavBar />}
       <Routes>
         <Route path='/' element={<Hero />} />
         <Route

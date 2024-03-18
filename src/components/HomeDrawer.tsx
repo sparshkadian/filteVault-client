@@ -1,0 +1,104 @@
+import { useState, useRef } from 'react';
+import { Drawer } from 'antd';
+import { Link } from 'react-router-dom';
+
+const HomeDrawer = ({ icon }: { icon: string }) => {
+  const [open, setOpen] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [barsClicked, setBarsClicked] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  console.log(file);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+  console.log(open);
+
+  window.addEventListener('resize', () => {
+    setWidth(window.innerWidth);
+  });
+
+  // setBarsClicked need to be set to false again when width > 640
+
+  const showDrawer = () => {
+    setBarsClicked(true);
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setBarsClicked(false);
+    setOpen(false);
+  };
+
+  const checkBarsClicked = () => {
+    if (barsClicked) return true;
+    else return false;
+  };
+
+  return (
+    <>
+      <img
+        src={icon}
+        alt='bars'
+        width={25}
+        onClick={showDrawer}
+        className='cursor-pointer absolute top-3 left-2 block sm:hidden'
+      />
+      <Drawer
+        onClose={onClose}
+        open={width < 640 && checkBarsClicked()}
+        width={220}
+        placement='left'
+      >
+        <div className='sm:flex flex-col gap-3h-full'>
+          {/* Form */}
+          <form>
+            <input
+              onChange={handleFileChange}
+              type='file'
+              ref={fileRef}
+              className='hidden'
+            />
+          </form>
+
+          {/* Add New */}
+          <div
+            onClick={() => {
+              fileRef.current?.click();
+            }}
+            className='w-[100px] shadow-md bg-white cursor-pointer flex justify-between items-center rounded-xl hover:shadow-lg transition-all ease-in-out duration-300 py-3 px-4'
+          >
+            <img src='./plus.png' alt='trash' width={18} />
+            <p>New</p>
+          </div>
+
+          {/* Home */}
+          <Link
+            to='/'
+            className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'
+          >
+            <img src='./home.png' alt='trash' width={18} />
+            <p>Home</p>
+          </Link>
+
+          {/* Trash */}
+          <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
+            <img src='./trash.png' alt='trash' width={18} />
+            <p>Trash</p>
+          </div>
+
+          {/* starred */}
+          <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
+            <img src='./star.png' alt='trash' width={15} />
+            <p>Starred</p>
+          </div>
+        </div>
+      </Drawer>
+    </>
+  );
+};
+
+export default HomeDrawer;

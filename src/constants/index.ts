@@ -7,3 +7,9 @@ export const heroText = [
     className: 'text-blue-500 dark:text-blue-500',
   },
 ];
+
+export const files = [
+  {
+    fileName: '',
+  },
+];
