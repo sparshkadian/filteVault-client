@@ -43,9 +43,9 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
       <img
         src={icon}
         alt='bars'
-        width={25}
+        width={18}
         onClick={showDrawer}
-        className='cursor-pointer absolute top-3 left-2 block sm:hidden'
+        className='cursor-pointer absolute top-3 left-3 block sm:hidden'
       />
       <Drawer
         onClose={onClose}
