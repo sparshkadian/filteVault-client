@@ -1,7 +1,16 @@
-const SearchFile = () => {
+import { SetStateAction } from 'react';
+
+const SearchFile = ({
+  setSearchFile,
+}: {
+  setSearchFile: React.Dispatch<SetStateAction<string>>;
+}) => {
   return (
     <div className='mx-auto mt-3 flex items-center justify-between max-w-2xl bg-gray-100 px-3 py-2 rounded-full shadow-md hover:shadow-xl focus:shadow-xl'>
       <input
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchFile(e.target.value);
+        }}
         type='text'
         className='w-[90%] p-1 bg-gray-100 focus:outline-none'
         placeholder='Search File'

@@ -1,7 +1,13 @@
 import { files } from '../../constants';
 import FileItem from './FileItem';
 
-const FileList = ({ layout }: { layout: string }) => {
+const FileList = ({
+  layout,
+  searchFile,
+}: {
+  layout: string;
+  searchFile: string;
+}) => {
   return (
     <div
       className={`${
@@ -10,9 +16,16 @@ const FileList = ({ layout }: { layout: string }) => {
           : 'flex flex-col gap-5 max-w-4xl mx-auto'
       }`}
     >
-      {files.map((file) => (
-        <FileItem key={file.id} file={file} layout={layout} />
-      ))}
+      {files
+        .filter(({ fileName }) => {
+          return fileName
+            .toLowerCase()
+            .replace(/\s/g, '')
+            .includes(searchFile.toLocaleLowerCase());
+        })
+        .map((file) => {
+          return <FileItem key={file.id} file={file} layout={layout} />;
+        })}
     </div>
   );
 };

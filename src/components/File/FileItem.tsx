@@ -24,7 +24,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
       }  relative bg-gray-100 rounded-md shadow-md py-3`}
     >
       {/*  */}
-      <div ref={divRef} className='absolute inset-0 z-[-1]' />
+      <div ref={divRef} className='rounded-md absolute inset-0 z-[-1]' />
 
       {/* File Image */}
       <img

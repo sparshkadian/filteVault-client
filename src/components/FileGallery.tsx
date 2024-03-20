@@ -4,12 +4,13 @@ import { useState } from 'react';
 
 const FileGallery = () => {
   const [layout, setLayout] = useState('grid');
+  const [searchFile, setSearchFile] = useState<string>('');
 
   return (
     <div className='bg-white mt-10 flex-1 rounded-tl-md p-2'>
       {/* Search Functionality Component*/}
       <div className='w-full'>
-        <SearchFile />
+        <SearchFile setSearchFile={setSearchFile} />
 
         <div className='bg-gray-100 rounded-full max-w-[100px] mx-auto mt-4  flex items-center'>
           <div
@@ -51,7 +52,7 @@ const FileGallery = () => {
           layout === 'grid' ? 'flex justify-center' : ''
         } h-[70vh] sm:mx-5 mt-10 p-5 pb-10 overflow-y-scroll`}
       >
-        <FileList layout={layout} />
+        <FileList layout={layout} searchFile={searchFile} />
       </div>
     </div>
   );
