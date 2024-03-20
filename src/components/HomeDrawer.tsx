@@ -49,7 +49,7 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
       />
       <Drawer
         onClose={onClose}
-        open={width < 640 && checkBarsClicked()}
+        open={width < 860 && checkBarsClicked()}
         width={220}
         placement='left'
       >
