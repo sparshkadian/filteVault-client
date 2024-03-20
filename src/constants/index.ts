@@ -38,7 +38,7 @@ export const files = [
   },
 
   {
-    id: 3,
+    id: 4,
     fileName: 'Word File',
     type: 'word',
     image: './word-placeholder.png',

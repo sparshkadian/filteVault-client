@@ -1,13 +1,7 @@
 import { files } from '../../constants';
 import FileItem from './FileItem';
 
-const FileList = ({
-  layout,
-  searchFile,
-}: {
-  layout: string;
-  searchFile: string;
-}) => {
+const FileList = ({ layout, query }: { layout: string; query: string }) => {
   return (
     <div
       className={`${
@@ -17,11 +11,11 @@ const FileList = ({
       }`}
     >
       {files
-        .filter(({ fileName }) => {
-          return fileName
+        .filter((file) => {
+          return file.fileName
             .toLowerCase()
             .replace(/\s/g, '')
-            .includes(searchFile.toLocaleLowerCase());
+            .includes(query.trim().toLowerCase());
         })
         .map((file) => {
           return <FileItem key={file.id} file={file} layout={layout} />;

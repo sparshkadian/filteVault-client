@@ -52,7 +52,7 @@ const FileGallery = () => {
           layout === 'grid' ? 'flex justify-center' : ''
         } h-[70vh] sm:mx-5 mt-10 p-5 pb-10 overflow-y-scroll`}
       >
-        <FileList layout={layout} searchFile={searchFile} />
+        <FileList layout={layout} query={searchFile} />
       </div>
     </div>
   );
