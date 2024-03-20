@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface FileProps {
+  id: number;
   fileName: string;
   type: string;
   image: string;
@@ -17,32 +18,36 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   return (
     <div
       className={`${
-        layout === 'list' ? 'grid grid-cols-3' : 'w-[250px] h-[250px]'
-      }  relative bg-gray-100 rounded-md shadow-md py-3  flex flex-col items-center`}
+        layout === 'list'
+          ? 'flex items-center justify-between px-2'
+          : 'w-[250px] h-[250px] flex flex-col items-center'
+      }  relative bg-gray-100 rounded-md shadow-md py-3`}
     >
-      {/* test Div */}
-      <div ref={divRef} className='absolute inset-0' />
+      {/*  */}
+      <div ref={divRef} className='absolute inset-0 z-[-1]' />
 
+      {/* File Image */}
       <img
         src={file.image}
         alt='file-image'
         className={`${
-          layout === 'list'
-            ? 'w-[40px] h-[40px] ml-2'
-            : 'mt- 4 h-[170px] w-[200px] rounded-md'
+          layout === 'list' ? 'w-[40px] h-[40px]' : 'mt- 4 h-[170px] w-[200px]'
         } object-cover`}
       />
+
+      {/* FileName */}
       <p
         className={`${
-          layout !== 'list'
-            ? 'h-[30px] mt-4 font-semibold text-lg w-full text-center overflow-hidden'
-            : 'text-lg text-center'
+          layout === 'list'
+            ? 'text-lg text-center'
+            : 'h-[30px] mt-4 font-semibold text-lg w-full text-center overflow-hidden'
         } `}
       >
         {file.fileName}
       </p>
 
       {/* FileOptions */}
+
       <img
         onClick={() => {
           if (divRef.current) {
@@ -56,8 +61,8 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
         alt='options'
         width={20}
         className={`${
-          layout === 'list' ? 'static ml-[120px]' : 'absolute right-1'
-        } cursor-pointer z-10`}
+          layout === 'list' ? '' : 'absolute right-1'
+        } cursor-pointer z-[2]`}
       />
 
       {openFileOptions && (
@@ -73,8 +78,6 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
                 onClick={() => {
                   if (divRef.current) {
                     divRef.current.style.zIndex = '-1';
-                    divRef.current.style.opacity = '1';
-                    divRef.current.style.backgroundColor = '#fff';
                     setOpenFileOptions(false);
                   }
                 }}

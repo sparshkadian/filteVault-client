@@ -46,7 +46,11 @@ const FileGallery = () => {
         </div>
       </div>
 
-      <div className='h-[70vh] sm:mx-5 mt-10 p-5 overflow-y-scroll flex justify-center'>
+      <div
+        className={`${
+          layout === 'grid' ? 'flex justify-center' : ''
+        } h-[70vh] sm:mx-5 mt-10 p-5 pb-10 overflow-y-scroll`}
+      >
         <FileList layout={layout} />
       </div>
     </div>
