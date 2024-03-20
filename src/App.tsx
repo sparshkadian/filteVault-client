@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
 import Protected from './components/Protected';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
   const location = useLocation();
@@ -24,6 +25,7 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
       </Routes>
+      <Toaster />
     </>
   );
 };
