@@ -5,18 +5,20 @@ import { cn } from '../utils/cn';
 import { IconBrandGoogle } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSignup } from '../hooks/useSignup';
 
 export function Signup() {
+  const { signup } = useSignup();
   const [formData, setFormData] = useState<{
-    username: string;
+    userName: string;
     email: string;
     password: string;
   }>({
-    username: '',
+    userName: '',
     email: '',
     password: '',
   });
-  const { username, email, password } = formData;
+  const { userName, email, password } = formData;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -27,7 +29,8 @@ export function Signup() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
+    signup('http://localhost:4100/api/auth/signup', formData);
+    setFormData({ userName: '', email: '', password: '' });
   };
   return (
     <div className='px-[10px]'>
@@ -42,13 +45,13 @@ export function Signup() {
         >
           <div className='flex flex-col'>
             <LabelInputContainer>
-              <Label htmlFor='username'>userName</Label>
+              <Label htmlFor='userName'>userName</Label>
               <Input
                 onChange={handleInputChange}
-                id='username'
+                id='userName'
                 placeholder='Tyler'
                 type='text'
-                value={username}
+                value={userName}
               />
             </LabelInputContainer>
           </div>
