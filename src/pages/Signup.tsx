@@ -32,6 +32,7 @@ export function Signup() {
     signup('http://localhost:4100/api/auth/signup', formData);
     setFormData({ userName: '', email: '', password: '' });
   };
+
   return (
     <div className='px-[10px]'>
       <div className='mt-[100px] shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>

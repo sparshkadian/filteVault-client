@@ -5,8 +5,10 @@ import { cn } from '../utils/cn';
 import { IconBrandGoogle } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
+import { useLogin } from '../hooks/useLogin';
 
 export function Login() {
+  const { login } = useLogin();
   const [formData, setFormData] = useState<{
     email: string;
     password: string;
@@ -25,8 +27,10 @@ export function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
+    login('http://localhost:4100/api/auth/login', formData);
+    setFormData({ email, password: '' });
   };
+
   return (
     <div className='px-[10px]'>
       <div className='mt-[100px] shadow-2xl max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 pb-1 md:p-8 md:pb-1 bg-white dark:bg-black'>
