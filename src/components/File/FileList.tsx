@@ -1,4 +1,3 @@
-// import { files } from '../../constants';
 import FileItem from './FileItem';
 import { useContext } from 'react';
 import { FileContext } from '../../context/FileContext';

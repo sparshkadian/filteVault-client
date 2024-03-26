@@ -14,7 +14,6 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
 
-  // Some files are missing extension so not working properly
   function checkMimeType(mimeType: string) {
     if (mimeType === 'pdf') return './pdf-placeholder.png';
     if (mimeType === 'word' || mimeType === 'docx')
