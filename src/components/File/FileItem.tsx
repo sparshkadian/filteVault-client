@@ -2,10 +2,9 @@ import { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 interface FileProps {
-  id: number;
   fileName: string;
-  type: string;
-  image: string;
+  mimeType: string;
+  fileSize: number;
 }
 
 const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
@@ -14,6 +13,13 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
 }) => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
+
+  // Some files are missing extension so not working properly
+  function checkMimeType(mimeType: string) {
+    if (mimeType === 'pdf') return './pdf-placeholder.png';
+    else if (mimeType === 'word' || 'docx') return './word-placeholder.png';
+    else return './img-placeholder.png';
+  }
 
   return (
     <div
@@ -28,7 +34,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
 
       {/* File Image */}
       <img
-        src={file.image}
+        src={checkMimeType(file.mimeType)}
         alt='file-image'
         className={`${
           layout === 'list' ? 'w-[40px] h-[40px]' : 'mt- 4 h-[170px] w-[200px]'

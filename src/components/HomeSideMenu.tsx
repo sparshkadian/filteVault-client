@@ -1,11 +1,18 @@
 import { useRef } from 'react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { FileContext } from '../context/FileContext';
 
 const HomeSideMenu = () => {
+  const { addFile } = useContext(FileContext);
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
-  console.log(file);
+
+  if (file) {
+    addFile(file);
+    setFile(null);
+  }
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

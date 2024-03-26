@@ -1,13 +1,22 @@
 import { useState, useRef } from 'react';
 import { Drawer } from 'antd';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { FileContext } from '../context/FileContext';
 
 const HomeDrawer = ({ icon }: { icon: string }) => {
+  const { addFile } = useContext(FileContext);
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [barsClicked, setBarsClicked] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  if (file) {
+    addFile(file);
+    setFile(null);
+    setOpen(false);
+  }
 
   // Comments to remove deploy error
   console.log(file);

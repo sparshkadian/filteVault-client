@@ -1,7 +1,11 @@
-import { files } from '../../constants';
+// import { files } from '../../constants';
 import FileItem from './FileItem';
+import { useContext } from 'react';
+import { FileContext } from '../../context/FileContext';
 
 const FileList = ({ layout, query }: { layout: string; query: string }) => {
+  const { files } = useContext(FileContext);
+
   return (
     <div
       className={`${
@@ -17,8 +21,8 @@ const FileList = ({ layout, query }: { layout: string; query: string }) => {
             .replace(/\s/g, '')
             .includes(query.trim().toLowerCase());
         })
-        .map((file) => {
-          return <FileItem key={file.id} file={file} layout={layout} />;
+        .map((file, i) => {
+          return <FileItem key={i} file={file} layout={layout} />;
         })}
     </div>
   );
