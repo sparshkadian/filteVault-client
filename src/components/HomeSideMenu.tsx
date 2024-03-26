@@ -3,14 +3,17 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { FileContext } from '../context/FileContext';
+import { useFileOperations } from '../hooks/useFileOperations';
 
 const HomeSideMenu = () => {
   const { addFile } = useContext(FileContext);
+  const { addFileToFirestore } = useFileOperations();
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   if (file) {
     addFile(file);
+    addFileToFirestore(file);
     setFile(null);
   }
 

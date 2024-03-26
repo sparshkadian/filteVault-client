@@ -3,9 +3,12 @@ import { Drawer } from 'antd';
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { FileContext } from '../context/FileContext';
+import { useFileOperations } from '../hooks/useFileOperations';
 
 const HomeDrawer = ({ icon }: { icon: string }) => {
   const { addFile } = useContext(FileContext);
+  const { addFileToFirestore } = useFileOperations();
+  // @ts-ignore
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [barsClicked, setBarsClicked] = useState(false);
@@ -14,11 +17,9 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
 
   if (file) {
     addFile(file);
+    addFileToFirestore(file);
     setFile(null);
   }
-
-  // Comments to remove deploy error
-  console.log(open);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {

@@ -1,7 +1,11 @@
 import toast from 'react-hot-toast';
 import { fileType } from '../context/FileContext';
+import { useSelector } from 'react-redux';
+import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { app } from '../firebase.config';
 
 export const useFileOperations = () => {
+  const { currentUser } = useSelector((state: any) => state.user);
   const addFileDB = async (url: string, fileData: fileType) => {
     try {
       const res = await fetch(url, {
@@ -37,5 +41,15 @@ export const useFileOperations = () => {
       toast.error(error.message);
     }
   };
-  return { addFileDB, moveToTrashDB };
+
+  const addFileToFirestore = (file: File) => {
+    const storage = getStorage(app);
+    const storageRef = ref(storage, `${currentUser.email}/${file.name}`);
+
+    uploadBytes(storageRef, file).then(() => {
+      console.log('file Uploaded');
+    });
+  };
+
+  return { addFileDB, moveToTrashDB, addFileToFirestore };
 };
