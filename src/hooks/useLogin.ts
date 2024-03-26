@@ -1,13 +1,21 @@
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+} from '../redux/user/userSlice';
+import { useDispatch } from 'react-redux';
 
 export const useLogin = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const login = async (
     url: string,
     formData: { email: string; password: string }
   ) => {
     try {
+      dispatch(loginStart());
       const res = await fetch(url, {
         method: 'POST',
         headers: {
@@ -17,9 +25,11 @@ export const useLogin = () => {
       });
       const data = await res.json();
       if (data.status !== 'success') {
+        dispatch(loginFailure());
         throw new Error(data.message);
       }
       toast.success('SignIn Successful');
+      dispatch(loginSuccess(data.user));
       setTimeout(() => {
         navigate('/home');
       }, 500);
