@@ -1,9 +1,15 @@
 import FileItem from './FileItem';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { FileContext } from '../../context/FileContext';
+import { useSelector } from 'react-redux';
 
 const FileList = ({ layout, query }: { layout: string; query: string }) => {
-  const { files } = useContext(FileContext);
+  const { files, getUserFiles } = useContext(FileContext);
+  const { currentUser } = useSelector((state: any) => state.user);
+
+  useEffect(() => {
+    getUserFiles(currentUser._id);
+  }, []);
 
   return (
     <div

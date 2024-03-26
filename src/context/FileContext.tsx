@@ -12,20 +12,28 @@ interface FileContextType {
   files: fileType[];
   setFiles: React.Dispatch<React.SetStateAction<fileType[]>>;
   addFile: Function;
+  getUserFiles: Function;
 }
 
 const initialState: FileContextType = {
   files: [],
   setFiles: () => {},
   addFile: () => {},
+  getUserFiles: () => {},
 };
 
 export const FileContext = createContext<FileContextType>(initialState);
 
 export const FileProvider = ({ children }: { children: React.ReactNode }) => {
-  const { currentUser } = useSelector((state: any) => state.user);
   const { addFileDB } = useAddFile();
+  const { currentUser } = useSelector((state: any) => state.user);
   const [files, setFiles] = useState<fileType[]>([]);
+
+  const getUserFiles = async (userId: string) => {
+    const res = await fetch(`http://localhost:4100/api/file/${userId}`);
+    const data = await res.json();
+    setFiles(data.files);
+  };
 
   const addFile = (file: File) => {
     const newFile = {
@@ -39,7 +47,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <FileContext.Provider value={{ files, setFiles, addFile }}>
+    <FileContext.Provider value={{ files, setFiles, addFile, getUserFiles }}>
       {children}
     </FileContext.Provider>
   );
