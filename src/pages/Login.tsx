@@ -6,6 +6,7 @@ import { IconBrandGoogle } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useLogin } from '../hooks/useLogin';
+import OAuth from '../components/OAuth';
 
 export function Login() {
   const { login } = useLogin();
@@ -90,7 +91,7 @@ export function Login() {
             >
               <IconBrandGoogle className='h-5 w-5 text-neutral-800 dark:text-neutral-300' />
               <span className='text-neutral-700 dark:text-neutral-300 text-md'>
-                Google
+                <OAuth />
               </span>
               <BottomGradient />
             </button>
