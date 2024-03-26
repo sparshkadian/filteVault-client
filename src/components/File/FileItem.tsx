@@ -1,5 +1,7 @@
 import { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useContext } from 'react';
+import { FileContext } from '../../context/FileContext';
 
 interface FileProps {
   fileName: string;
@@ -11,6 +13,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   file,
   layout,
 }) => {
+  const { moveToTrash } = useContext(FileContext);
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
 
@@ -53,7 +56,6 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
       </p>
 
       {/* FileOptions */}
-
       <img
         onClick={() => {
           if (divRef.current) {
@@ -100,12 +102,18 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
               </div>
 
               {/* Trash */}
-              <div className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'>
+              <div
+                onClick={() => {
+                  // @ts-ignore
+                  moveToTrash(file._id);
+                }}
+                className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+              >
                 <img src='./trash.png' alt='trash' width={15} />
                 <p className='text-sm'>Move to Trash</p>
               </div>
 
-              {/* Trash */}
+              {/* Download */}
               <div className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'>
                 <img src='./download.png' alt='trash' width={15} />
                 <p className='text-sm'>Download</p>

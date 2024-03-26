@@ -15,7 +15,6 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
   if (file) {
     addFile(file);
     setFile(null);
-    setOpen(false);
   }
 
   // Comments to remove deploy error

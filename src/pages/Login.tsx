@@ -27,7 +27,7 @@ export function Login() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    login('http://localhost:4100/api/auth/login', formData);
+    login('/api/auth/login', formData);
     setFormData({ email, password: '' });
   };
 

@@ -1,5 +1,5 @@
 import { createContext, useState } from 'react';
-import { useAddFile } from '../hooks/useAddFile';
+import { useFileOperations } from '../hooks/useFileOperations';
 import { useSelector } from 'react-redux';
 
 export interface fileType {
@@ -13,6 +13,7 @@ interface FileContextType {
   setFiles: React.Dispatch<React.SetStateAction<fileType[]>>;
   addFile: Function;
   getUserFiles: Function;
+  moveToTrash: Function;
 }
 
 const initialState: FileContextType = {
@@ -20,17 +21,18 @@ const initialState: FileContextType = {
   setFiles: () => {},
   addFile: () => {},
   getUserFiles: () => {},
+  moveToTrash: () => {},
 };
 
 export const FileContext = createContext<FileContextType>(initialState);
 
 export const FileProvider = ({ children }: { children: React.ReactNode }) => {
-  const { addFileDB } = useAddFile();
+  const { addFileDB, moveToTrashDB } = useFileOperations();
   const { currentUser } = useSelector((state: any) => state.user);
   const [files, setFiles] = useState<fileType[]>([]);
 
   const getUserFiles = async (userId: string) => {
-    const res = await fetch(`http://localhost:4100/api/file/${userId}`);
+    const res = await fetch(`/api/file/${userId}`);
     const data = await res.json();
     setFiles(data.files);
   };
@@ -43,11 +45,24 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
     };
     setFiles((prev) => [...prev, newFile]);
 
-    addFileDB(`http://localhost:4100/api/file/${currentUser._id}`, newFile);
+    addFileDB(`/api/file/${currentUser._id}`, newFile);
+  };
+
+  const moveToTrash = (fileId: string) => {
+    setFiles(
+      files.filter((file) => {
+        // @ts-ignore
+        return file._id !== fileId;
+      })
+    );
+
+    moveToTrashDB(`/api/file/${fileId}`);
   };
 
   return (
-    <FileContext.Provider value={{ files, setFiles, addFile, getUserFiles }}>
+    <FileContext.Provider
+      value={{ files, setFiles, addFile, getUserFiles, moveToTrash }}
+    >
       {children}
     </FileContext.Provider>
   );
