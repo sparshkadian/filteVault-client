@@ -1,4 +1,6 @@
 import { createContext, useState } from 'react';
+import { useAddFile } from '../hooks/useAddFile';
+import { useSelector } from 'react-redux';
 
 export interface fileType {
   fileName: string;
@@ -21,8 +23,9 @@ const initialState: FileContextType = {
 export const FileContext = createContext<FileContextType>(initialState);
 
 export const FileProvider = ({ children }: { children: React.ReactNode }) => {
+  const { currentUser } = useSelector((state: any) => state.user);
+  const { addFileDB } = useAddFile();
   const [files, setFiles] = useState<fileType[]>([]);
-  console.log(files);
 
   const addFile = (file: File) => {
     const newFile = {
@@ -31,6 +34,8 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
       mimeType: file.name.split('.')[1],
     };
     setFiles((prev) => [...prev, newFile]);
+
+    addFileDB(`http://localhost:4100/api/file/${currentUser._id}`, newFile);
   };
 
   return (

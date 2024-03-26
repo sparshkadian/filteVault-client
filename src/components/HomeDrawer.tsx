@@ -19,7 +19,6 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
   }
 
   // Comments to remove deploy error
-  console.log(file);
   console.log(open);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

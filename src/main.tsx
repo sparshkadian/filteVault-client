@@ -11,15 +11,15 @@ import { FileProvider } from './context/FileContext.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <FileProvider>
-        <Provider store={store}>
+      <Provider store={store}>
+        <FileProvider>
           <PersistGate loading={null} persistor={persistor}>
             <Routes>
               <Route path='/*' element={<App />} />
             </Routes>
           </PersistGate>
-        </Provider>
-      </FileProvider>
+        </FileProvider>
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
