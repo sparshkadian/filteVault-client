@@ -5,6 +5,8 @@ import userSlice from './user/userSlice';
 
 const rootReducer = combineReducers({ user: userSlice });
 
+// export type IRootState = ReturnType<typeof rootReducer>;
+
 const persistConfig = {
   key: 'root',
   storage,

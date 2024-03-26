@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { Drawer } from 'antd';
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
-import AppContext from '../context/AppContext';
+import { useSelector } from 'react-redux';
 
 const NavbarDrawer = ({ icon }: { icon: string }) => {
-  const { currentUser } = useContext(AppContext);
+  const { currentUser } = useSelector((state: any) => state.user);
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [barsClicked, setBarsClicked] = useState(false);
@@ -58,7 +57,7 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
             </>
           ) : (
             <img
-              src='./userAvatar.png'
+              src={currentUser.avatar}
               alt='profile'
               width={150}
               height={150}

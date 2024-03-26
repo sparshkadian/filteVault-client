@@ -1,10 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
 import NavbarDrawer from './NavbarDrawer';
-import { useContext } from 'react';
-import AppContext from '../context/AppContext';
+import { useSelector } from 'react-redux';
 
 const NavBar = () => {
-  const { currentUser } = useContext(AppContext);
+  const { currentUser } = useSelector((state: any) => state.user);
   const location = useLocation();
 
   return (
@@ -28,7 +27,7 @@ const NavBar = () => {
             </div>
           ) : (
             <img
-              src='./userAvatar.png'
+              src={currentUser.avatar}
               alt='profile'
               width={50}
               height={50}
