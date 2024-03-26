@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import { fileType } from '../context/FileContext';
 import { useSelector } from 'react-redux';
-import { getStorage, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 import { app } from '../firebase.config';
 
 export const useFileOperations = () => {
@@ -44,12 +44,24 @@ export const useFileOperations = () => {
 
   const addFileToFirestore = (file: File) => {
     const storage = getStorage(app);
-    const storageRef = ref(storage, `${currentUser.email}/${file.name}`);
+    const fileName = file.name.split('.')[0];
+    const storageRef = ref(storage, `${currentUser.email}/${fileName}`);
 
     uploadBytes(storageRef, file).then(() => {
       console.log('file Uploaded');
     });
   };
 
-  return { addFileDB, moveToTrashDB, addFileToFirestore };
+  const getFileDownloadUrl = (fileName: string) => {
+    const storage = getStorage(app);
+    getDownloadURL(ref(storage, `${currentUser.email}/${fileName}`))
+      .then((url) => {
+        window.open(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  return { addFileDB, moveToTrashDB, addFileToFirestore, getFileDownloadUrl };
 };

@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { FileContext } from '../../context/FileContext';
+import { useFileOperations } from '../../hooks/useFileOperations';
 
 interface FileProps {
   fileName: string;
@@ -14,6 +15,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   layout,
 }) => {
   const { moveToTrash } = useContext(FileContext);
+  const { getFileDownloadUrl } = useFileOperations();
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
 
@@ -22,6 +24,13 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
     if (mimeType === 'word' || mimeType === 'docx')
       return './word-placeholder.png';
     else return './img-placeholder.png';
+  }
+
+  function closeFileOptions() {
+    if (divRef.current) {
+      divRef.current.style.zIndex = '-1';
+      setOpenFileOptions(false);
+    }
   }
 
   return (
@@ -84,10 +93,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
             <div className='h-full w-full realtive'>
               <img
                 onClick={() => {
-                  if (divRef.current) {
-                    divRef.current.style.zIndex = '-1';
-                    setOpenFileOptions(false);
-                  }
+                  closeFileOptions();
                 }}
                 src='./close.png'
                 alt='close'
@@ -106,6 +112,7 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
                 onClick={() => {
                   // @ts-ignore
                   moveToTrash(file._id);
+                  closeFileOptions();
                 }}
                 className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
               >
@@ -114,7 +121,13 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
               </div>
 
               {/* Download */}
-              <div className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'>
+              <div
+                onClick={() => {
+                  getFileDownloadUrl(file.fileName);
+                  closeFileOptions();
+                }}
+                className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+              >
                 <img src='./download.png' alt='trash' width={15} />
                 <p className='text-sm'>Download</p>
               </div>
