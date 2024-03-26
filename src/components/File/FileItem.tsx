@@ -17,7 +17,8 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   // Some files are missing extension so not working properly
   function checkMimeType(mimeType: string) {
     if (mimeType === 'pdf') return './pdf-placeholder.png';
-    else if (mimeType === 'word' || 'docx') return './word-placeholder.png';
+    if (mimeType === 'word' || mimeType === 'docx')
+      return './word-placeholder.png';
     else return './img-placeholder.png';
   }
 
