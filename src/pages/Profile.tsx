@@ -2,10 +2,12 @@
 import { useSelector } from 'react-redux';
 import { useRef, useState } from 'react';
 import { useFileOperations } from '../hooks/useFileOperations';
+import { useProfileUpdate } from '../hooks/useProfileUpdate';
 
 const Profile = () => {
   const { currentUser } = useSelector((state: any) => state.user);
   const { changeProfilePicture } = useFileOperations();
+  const { profileUpdate } = useProfileUpdate();
   const [formData, setFormData] = useState({
     avatar: currentUser.avatar,
     userName: currentUser.userName,
@@ -28,15 +30,24 @@ const Profile = () => {
     }));
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    profileUpdate(`/api/user/${currentUser._id}`, formData);
+  };
+
   return (
     <div className='p-2'>
-      <form className='rounded-md relative mx-auto max-w-5xl mt-10 sm:flex shadow-lg'>
+      <form
+        onSubmit={handleSubmit}
+        className='rounded-md relative mx-auto max-w-5xl mt-10 sm:flex shadow-lg'
+      >
         {/* Left Panel */}
         <div className='flex flex-col items-center gap-5 p-3'>
           <img
             src={avatar}
             alt='avatar'
             width={120}
+            height={120}
             className='mix-blend-multiply'
           />
           <input
@@ -72,8 +83,9 @@ const Profile = () => {
             className='bg-gray-100 p-2 rounded-md text-center'
           />
         </div>
+
         {/* Right Panel */}
-        <div className='sm:border-l-2 border-l-gray-300 flex-1 p-3 pl-4'>
+        <div className='sm:border-l-2 border-l-gray-300 flex-1 p-3 pl-4 flex flex-col'>
           <p className='text-lg'>
             Joined On: {currentUser.createdAt.split('T')[0]}
           </p>
@@ -93,7 +105,7 @@ const Profile = () => {
 
           {/* stats */}
 
-          <div className='flex justify-center mt-10'>
+          <div className='mt-2 flex justify-center items-end flex-1'>
             <button className='h-[50px] profile-btn mt-2 bg-slate-500 text-white text-xl hover:opacity-80 w-[150px] p-2 rounded-md'>
               Save Changes
             </button>

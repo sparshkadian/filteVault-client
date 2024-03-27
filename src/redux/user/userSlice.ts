@@ -39,6 +39,16 @@ const userSlice = createSlice({
     googleSignInFailure: (state) => {
       state.loading = false;
     },
+    profileUpdateStart: (state) => {
+      state.loading = true;
+    },
+    profileUpdateSuccess: (state, action) => {
+      state.currentUser = action.payload;
+      state.loading = false;
+    },
+    profileUpdateFailure: (state) => {
+      state.loading = false;
+    },
   },
 });
 
@@ -52,6 +62,9 @@ export const {
   googleSignInStart,
   googleSignInSuccess,
   googleSignInFailure,
+  profileUpdateStart,
+  profileUpdateSuccess,
+  profileUpdateFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;
