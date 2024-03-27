@@ -6,8 +6,10 @@ import { FileContext } from '../context/FileContext';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { signOut } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const HomeSideMenu = () => {
+  const { currentUser } = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
   const { addFile } = useContext(FileContext);
   const { addFileToFirestore } = useFileOperations();
@@ -102,7 +104,15 @@ const HomeSideMenu = () => {
       </div>
 
       {/* Delete Account */}
-      <div className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-red-300 transition-all ease-in-out duration-300 py-1 px-3'>
+      <div
+        onClick={async () => {
+          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+          dispatch(signOut());
+        }}
+        className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-red-300 transition-all ease-in-out duration-300 py-1 px-3'
+      >
         <img src='./delete-acc.png' alt='trash' width={18} />
         <p>Delete Account</p>
       </div>
