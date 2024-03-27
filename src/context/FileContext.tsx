@@ -32,7 +32,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   const [files, setFiles] = useState<fileType[]>([]);
 
   const getUserFiles = async (userId: string) => {
-    const res = await fetch(`/api/file/${userId}`);
+    const res = await fetch(`http://localhost:4100/api/file/${userId}`);
     const data = await res.json();
     setFiles(data.files);
   };
@@ -45,7 +45,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
     };
     setFiles((prev) => [...prev, newFile]);
 
-    addFileDB(`/api/file/${currentUser._id}`, newFile);
+    addFileDB(`http://localhost:4100/api/file/${currentUser._id}`, newFile);
   };
 
   const moveToTrash = (fileId: string) => {
