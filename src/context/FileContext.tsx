@@ -56,7 +56,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
       })
     );
 
-    moveToTrashDB(`/api/file/${fileId}`);
+    moveToTrashDB(`http://localhost:4100/api/file/${fileId}`);
   };
 
   return (
