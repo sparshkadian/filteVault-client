@@ -4,6 +4,7 @@ import Hero from './pages/Hero';
 import Home from './pages/Home';
 import { Signup } from './pages/Signup';
 import { Login } from './pages/Login';
+import Profile from './pages/Profile';
 import Protected from './components/Protected';
 import { Toaster } from 'react-hot-toast';
 
@@ -11,7 +12,9 @@ const App = () => {
   const location = useLocation();
   return (
     <>
-      {location.pathname !== '/home' && <NavBar />}
+      {location.pathname !== '/home' && location.pathname !== '/profile' && (
+        <NavBar />
+      )}
       <Routes>
         <Route path='/' element={<Hero />} />
         <Route
@@ -19,6 +22,14 @@ const App = () => {
           element={
             <Protected>
               <Home />
+            </Protected>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <Protected>
+              <Profile />
             </Protected>
           }
         />

@@ -26,13 +26,21 @@ const NavBar = () => {
               </Link>
             </div>
           ) : (
-            <img
-              src={currentUser.avatar}
-              alt='profile'
-              width={50}
-              height={50}
-              className='hidden sm:block rounded-full shadow-xl cursor-pointer'
-            />
+            <div className='hidden sm:flex gap-5 items-center'>
+              <Link to='/profile'>
+                <img
+                  src={currentUser.avatar}
+                  alt='profile'
+                  width={50}
+                  height={50}
+                  className='rounded-full shadow-xl cursor-pointer'
+                />
+              </Link>
+
+              <Link to='/home'>
+                <button className='nav__button w-full'>View Files</button>
+              </Link>
+            </div>
           )}
         </>
       )}

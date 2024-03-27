@@ -56,13 +56,20 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
               </Link>
             </>
           ) : (
-            <img
-              src={currentUser.avatar}
-              alt='profile'
-              width={150}
-              height={150}
-              className='rounded-full self-center shadow-md'
-            />
+            <div className='flex flex-col gap-4'>
+              <Link to='/profile' className='self-center'>
+                <img
+                  src={currentUser.avatar}
+                  alt='profile'
+                  width={150}
+                  height={150}
+                  className='rounded-full shadow-lg'
+                />
+              </Link>
+              <Link to='/home'>
+                <button className='nav__button w-full'>View Files</button>
+              </Link>
+            </div>
           )}
         </div>
       </Drawer>

@@ -94,7 +94,7 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
 
           {/* User Profile */}
           <Link
-            to=''
+            to='/profile'
             className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
           >
             <img src='./user.png' alt='trash' width={18} />

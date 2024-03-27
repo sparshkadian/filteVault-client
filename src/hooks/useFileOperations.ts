@@ -1,7 +1,13 @@
 import toast from 'react-hot-toast';
 import { fileType } from '../context/FileContext';
 import { useSelector } from 'react-redux';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
+import {
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes,
+  uploadBytesResumable,
+} from 'firebase/storage';
 import { app } from '../firebase.config';
 
 export const useFileOperations = () => {
@@ -63,5 +69,45 @@ export const useFileOperations = () => {
       });
   };
 
-  return { addFileDB, moveToTrashDB, addFileToFirestore, getFileDownloadUrl };
+  const changeProfilePicture = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
+      const storageRef = ref(storage, `${currentUser.email}/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+          }
+        },
+        (error: any) => {
+          toast.error(error.message);
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            resolve(downloadURL);
+          });
+        }
+      );
+    });
+  };
+
+  return {
+    addFileDB,
+    moveToTrashDB,
+    addFileToFirestore,
+    getFileDownloadUrl,
+    changeProfilePicture,
+  };
 };
