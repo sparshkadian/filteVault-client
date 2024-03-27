@@ -41,7 +41,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
     const newFile = {
       fileName: file.name.split('.')[0],
       fileSize: +(file.size / 1000000).toFixed(2),
-      mimeType: file.name.split('.')[1],
+      mimeType: file.type,
     };
     setFiles((prev) => [...prev, newFile]);
 
@@ -61,7 +61,13 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <FileContext.Provider
-      value={{ files, setFiles, addFile, getUserFiles, moveToTrash }}
+      value={{
+        files,
+        setFiles,
+        addFile,
+        getUserFiles,
+        moveToTrash,
+      }}
     >
       {children}
     </FileContext.Provider>

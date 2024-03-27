@@ -79,10 +79,13 @@ const HomeSideMenu = () => {
       </div>
 
       {/* Trash */}
-      <div className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
+      <Link
+        to='/trash'
+        className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'
+      >
         <img src='./trash.png' alt='trash' width={18} />
         <p>Trash</p>
-      </div>
+      </Link>
     </div>
   );
 };

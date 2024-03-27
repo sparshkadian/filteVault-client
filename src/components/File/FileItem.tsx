@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useContext } from 'react';
 import { FileContext } from '../../context/FileContext';
 import { useFileOperations } from '../../hooks/useFileOperations';
+import { checkMimeType } from '../../utils/checkMimeType';
 
 interface FileProps {
   fileName: string;
@@ -18,13 +19,6 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   const { getFileDownloadUrl } = useFileOperations();
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
-
-  function checkMimeType(mimeType: string) {
-    if (mimeType === 'pdf') return './pdf-placeholder.png';
-    if (mimeType === 'word' || mimeType === 'docx')
-      return './word-placeholder.png';
-    else return './img-placeholder.png';
-  }
 
   function closeFileOptions() {
     if (divRef.current) {

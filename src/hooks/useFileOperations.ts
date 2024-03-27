@@ -9,6 +9,7 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase.config';
+import { SetStateAction } from 'react';
 
 export const useFileOperations = () => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -42,6 +43,28 @@ export const useFileOperations = () => {
       if (data.status !== 'success') {
         throw new Error(data.message);
       }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  const deleteFilePerm = async (
+    url: string,
+    fileId: string,
+    trashFiles: any,
+    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+  ) => {
+    try {
+      await fetch(url, {
+        method: 'DELETE',
+      });
+      toast.success('File Deleted');
+      setTrashFiles(
+        trashFiles.filter((file: any) => {
+          return file._id !== fileId;
+        })
+      );
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -106,6 +129,7 @@ export const useFileOperations = () => {
   return {
     addFileDB,
     moveToTrashDB,
+    deleteFilePerm,
     addFileToFirestore,
     getFileDownloadUrl,
     changeProfilePicture,

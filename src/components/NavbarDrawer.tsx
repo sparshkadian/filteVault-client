@@ -5,10 +5,10 @@ import { useSelector } from 'react-redux';
 
 const NavbarDrawer = ({ icon }: { icon: string }) => {
   const { currentUser } = useSelector((state: any) => state.user);
+  //@ts-ignore
   const [open, setOpen] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [barsClicked, setBarsClicked] = useState(false);
-  console.log(open);
 
   window.addEventListener('resize', () => {
     setWidth(window.innerWidth);
