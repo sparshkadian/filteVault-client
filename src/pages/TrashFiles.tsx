@@ -12,7 +12,9 @@ const TrashFiles = () => {
 
   useEffect(() => {
     const getTrashFiles = async () => {
-      const res = await fetch(`/api/file/trashFiles/${currentUser._id}`);
+      const res = await fetch(
+        `http://localhost:4100/api/file/trashFiles/${currentUser._id}`
+      );
       const data = await res.json();
       setTrashFiles(data.files);
     };
@@ -57,7 +59,7 @@ const TrashFiles = () => {
               <div
                 onClick={() => {
                   deleteFilePerm(
-                    `/api/file/permanent/${file._id}`,
+                    `http://localhost:4100/api/file/permanent/${file._id}`,
                     file._id,
                     trashFiles,
                     setTrashFiles

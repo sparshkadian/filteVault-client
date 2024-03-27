@@ -9,7 +9,6 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase.config';
-import { SetStateAction } from 'react';
 
 export const useFileOperations = () => {
   const { currentUser } = useSelector((state: any) => state.user);

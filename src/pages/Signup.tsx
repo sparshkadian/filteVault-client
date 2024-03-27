@@ -30,7 +30,7 @@ export function Signup() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup('/api/auth/signup', formData);
+    signup('http://localhost:4100/api/auth/signup', formData);
     setFormData({ userName: '', email: '', password: '' });
   };
 

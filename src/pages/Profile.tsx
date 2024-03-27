@@ -32,7 +32,10 @@ const Profile = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    profileUpdate(`/api/user/${currentUser._id}`, formData);
+    profileUpdate(
+      `http://localhost:4100/api/user/${currentUser._id}`,
+      formData
+    );
   };
 
   return (
