@@ -9,8 +9,11 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase.config';
+import { useContext } from 'react';
+import { FileContext } from '../context/FileContext';
 
 export const useFileOperations = () => {
+  const { setFiles } = useContext(FileContext);
   const { currentUser } = useSelector((state: any) => state.user);
   const addFileDB = async (url: string, fileData: fileType) => {
     try {
@@ -68,6 +71,35 @@ export const useFileOperations = () => {
       console.log(error);
       toast.error(error.message);
     }
+  };
+
+  const restoreFile = async (
+    file: any,
+    fileId: string,
+    trashFiles: any,
+    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+  ) => {
+    try {
+      const res = await fetch(
+        `http://localhost:4100/api/file/moveOutOfTrash/${file._id}`,
+        {
+          method: 'PATCH',
+        }
+      );
+
+      const data = await res.json();
+      if (data.status !== 'success') {
+        throw new Error(data.message);
+      }
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+    setTrashFiles(
+      trashFiles.filter((file: any) => {
+        return file._id !== fileId;
+      })
+    );
   };
 
   const addFileToFirestore = (file: File) => {
@@ -129,6 +161,7 @@ export const useFileOperations = () => {
     addFileDB,
     moveToTrashDB,
     deleteFilePerm,
+    restoreFile,
     addFileToFirestore,
     getFileDownloadUrl,
     changeProfilePicture,
