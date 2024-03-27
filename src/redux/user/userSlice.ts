@@ -49,6 +49,9 @@ const userSlice = createSlice({
     profileUpdateFailure: (state) => {
       state.loading = false;
     },
+    signOut: (state) => {
+      state.currentUser = null;
+    },
   },
 });
 
@@ -65,6 +68,7 @@ export const {
   profileUpdateStart,
   profileUpdateSuccess,
   profileUpdateFailure,
+  signOut,
 } = userSlice.actions;
 
 export default userSlice.reducer;

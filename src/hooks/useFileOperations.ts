@@ -9,11 +9,8 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase.config';
-import { useContext } from 'react';
-import { FileContext } from '../context/FileContext';
 
 export const useFileOperations = () => {
-  const { setFiles } = useContext(FileContext);
   const { currentUser } = useSelector((state: any) => state.user);
   const addFileDB = async (url: string, fileData: fileType) => {
     try {
