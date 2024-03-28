@@ -142,6 +142,12 @@ export const useFileOperations = () => {
     trashFiles: dbFile[],
     setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
+    if (trashFiles.length === 0) {
+      toast('Trash is Already Empty', {
+        style: { backgroundColor: '#111', color: '#fff' },
+      });
+      return;
+    }
     const trashFileIds = trashFiles.map((file: dbFile) => {
       return file._id;
     });

@@ -23,7 +23,8 @@ const TrashFiles = () => {
 
   return (
     <>
-      <div className='text-xs bg-gray-200 rounded-md mt-[150px] max-w-5xl mx-auto flex justify-between items-center px-3 py-1'>
+      {/* Empty Trash Div */}
+      <div className='text-xs bg-gray-200 rounded-md mt-[120px] max-w-5xl mx-auto flex justify-between items-center px-3 py-1'>
         <p>Items in the trash will be deleted forever after 30 days</p>
         <button
           onClick={() => {
@@ -34,6 +35,23 @@ const TrashFiles = () => {
           Empty Trash
         </button>
       </div>
+
+      {trashFiles.length === 0 && (
+        <div className='mt-[120px] flex justify-center items-center gap-3'>
+          <p className='roboto-font border-black text-[6vw] sm:tracking-tight'>
+            Trash is Empty!
+          </p>
+          <div className='w-[6vw]'>
+            <img
+              src='./empty-trash.png'
+              alt='empty-trash'
+              className='object-cover'
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Trash Div */}
       <div className='mt-10 max-w-5xl mx-auto p-2 flex gap-10 flex-wrap'>
         {trashFiles.map((file) => (
           <div
