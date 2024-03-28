@@ -4,15 +4,9 @@ import { useContext } from 'react';
 import { FileContext } from '../../context/FileContext';
 import { useFileOperations } from '../../hooks/useFileOperations';
 import { checkMimeType } from '../../utils/checkMimeType';
+import { dbFile } from '../../types';
 
-interface FileProps {
-  fileName: string;
-  mimeType: string;
-  fileSize: number;
-  starred: boolean;
-}
-
-const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
+const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
   file,
   layout,
 }) => {

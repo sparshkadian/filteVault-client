@@ -1,5 +1,4 @@
 import toast from 'react-hot-toast';
-import { fileType } from '../context/FileContext';
 import { useSelector } from 'react-redux';
 import {
   getDownloadURL,
@@ -13,7 +12,7 @@ import { dbFile } from '../types';
 
 export const useFileOperations = () => {
   const { currentUser } = useSelector((state: any) => state.user);
-  const addFileDB = async (url: string, fileData: fileType) => {
+  const addFileDB = async (url: string, fileData: dbFile) => {
     try {
       const res = await fetch(url, {
         method: 'POST',
@@ -91,7 +90,7 @@ export const useFileOperations = () => {
     file: dbFile,
     fileId: string,
     trashFiles: any,
-    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+    setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
     try {
       await fetch(`http://localhost:4100/api/file/permanent/${fileId}`, {
@@ -113,7 +112,7 @@ export const useFileOperations = () => {
     file: dbFile,
     fileId: string,
     trashFiles: any,
-    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+    setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
     try {
       const res = await fetch(
@@ -141,7 +140,7 @@ export const useFileOperations = () => {
 
   const emptyTrash = async (
     trashFiles: dbFile[],
-    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+    setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
     const trashFileIds = trashFiles.map((file: dbFile) => {
       return file._id;

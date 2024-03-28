@@ -1,16 +1,11 @@
 import { createContext, useState } from 'react';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { useSelector } from 'react-redux';
-
-export interface fileType {
-  fileName: string;
-  mimeType: string;
-  fileSize: number;
-}
+import { dbFile } from '../types';
 
 interface FileContextType {
-  files: fileType[];
-  setFiles: React.Dispatch<React.SetStateAction<fileType[]>>;
+  files: dbFile[];
+  setFiles: React.Dispatch<React.SetStateAction<dbFile[]>>;
   addFile: Function;
   getUserFiles: Function;
   moveToTrash: Function;
@@ -29,7 +24,7 @@ export const FileContext = createContext<FileContextType>(initialState);
 export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   const { addFileDB, moveToTrashDB } = useFileOperations();
   const { currentUser } = useSelector((state: any) => state.user);
-  const [files, setFiles] = useState<fileType[]>([]);
+  const [files, setFiles] = useState<dbFile[]>([]);
 
   const getUserFiles = async (userId: string) => {
     const res = await fetch(`http://localhost:4100/api/file/${userId}`);
