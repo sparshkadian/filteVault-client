@@ -10,6 +10,19 @@ import {
 } from 'firebase/storage';
 import { app } from '../firebase.config';
 
+interface trashFile {
+  _id: string;
+  userId: string;
+  fileName: string;
+  mimeType: string;
+  fileSize: number;
+  starred: boolean;
+  inTrash: boolean;
+  downloadLink: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 export const useFileOperations = () => {
   const { currentUser } = useSelector((state: any) => state.user);
   const addFileDB = async (url: string, fileData: fileType) => {
@@ -99,6 +112,21 @@ export const useFileOperations = () => {
     );
   };
 
+  const emptyTrash = async (
+    trashFiles: trashFile[],
+    setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
+  ) => {
+    const trashFileIds = trashFiles.map((file: trashFile) => {
+      return file._id;
+    });
+
+    await fetch(`http://localhost:4100/api/file/emptyTrash/${trashFileIds}`, {
+      method: 'DELETE',
+    });
+    setTrashFiles([]);
+    toast.success('Trash Empty');
+  };
+
   const addFileToFirestore = (file: File) => {
     const storage = getStorage(app);
     const fileName = file.name.split('.')[0];
@@ -159,6 +187,7 @@ export const useFileOperations = () => {
     moveToTrashDB,
     deleteFilePerm,
     restoreFile,
+    emptyTrash,
     addFileToFirestore,
     getFileDownloadUrl,
     changeProfilePicture,
