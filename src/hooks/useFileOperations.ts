@@ -9,19 +9,7 @@ import {
   uploadBytesResumable,
 } from 'firebase/storage';
 import { app } from '../firebase.config';
-
-interface dbFile {
-  _id: string;
-  userId: string;
-  fileName: string;
-  mimeType: string;
-  fileSize: number;
-  starred: boolean;
-  inTrash: boolean;
-  downloadLink: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { dbFile } from '../types';
 
 export const useFileOperations = () => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -72,7 +60,13 @@ export const useFileOperations = () => {
     }
   };
 
-  const removeFromStarred = async (file: dbFile) => {
+  const removeFromStarred = async (
+    file: dbFile,
+    fileId: string,
+    starredFiles: dbFile[],
+    setStarredFiles: React.Dispatch<React.SetStateAction<dbFile[]>>,
+    callfromStarPage: boolean
+  ) => {
     try {
       await fetch(
         `http://localhost:4100/api/file/removeFromStarred/${file._id}`,
@@ -80,6 +74,13 @@ export const useFileOperations = () => {
           method: 'PATCH',
         }
       );
+      if (callfromStarPage) {
+        setStarredFiles(
+          starredFiles.filter((file) => {
+            return file._id !== fileId;
+          })
+        );
+      }
       toast.success(`${file.fileName} removed from Starred`);
     } catch (error) {
       console.log(error);
