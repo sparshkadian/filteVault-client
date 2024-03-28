@@ -44,14 +44,12 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const moveToTrash = (fileId: string) => {
+    moveToTrashDB(`http://localhost:4100/api/file/${fileId}`);
     setFiles(
       files.filter((file) => {
-        // @ts-ignore
         return file._id !== fileId;
       })
     );
-
-    moveToTrashDB(`http://localhost:4100/api/file/${fileId}`);
   };
 
   return (
