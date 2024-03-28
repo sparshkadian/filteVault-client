@@ -83,7 +83,7 @@ const Profile = () => {
             id='email'
             value={currentUser.email}
             disabled
-            className='bg-gray-100 p-2 rounded-md text-center'
+            className='bg-gray-100 p-2 rounded-md text-center cursor-not-allowed'
           />
         </div>
 
