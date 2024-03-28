@@ -7,6 +7,7 @@ import { Login } from './pages/Login';
 import Profile from './pages/Profile';
 import Protected from './components/Protected';
 import TrashFiles from './pages/TrashFiles';
+import StarredFiles from './pages/StarredFiles';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
@@ -37,6 +38,7 @@ const App = () => {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/trash' element={<TrashFiles />} />
+        <Route path='/starred' element={<StarredFiles />} />
       </Routes>
       <Toaster />
     </>

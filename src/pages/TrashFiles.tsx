@@ -70,12 +70,7 @@ const TrashFiles = () => {
                 {/* Delete Permanently */}
                 <div
                   onClick={() => {
-                    deleteFilePerm(
-                      `http://localhost:4100/api/file/permanent/${file._id}`,
-                      file._id,
-                      trashFiles,
-                      setTrashFiles
-                    );
+                    deleteFilePerm(file, file._id, trashFiles, setTrashFiles);
                   }}
                   className='mt-7 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
                 >

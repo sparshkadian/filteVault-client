@@ -10,7 +10,7 @@ import {
 } from 'firebase/storage';
 import { app } from '../firebase.config';
 
-interface trashFile {
+interface dbFile {
   _id: string;
   userId: string;
   fileName: string;
@@ -61,19 +61,44 @@ export const useFileOperations = () => {
     }
   };
 
+  const addToStarred = async (file: dbFile) => {
+    try {
+      await fetch(`http://localhost:4100/api/file/addToStarred/${file._id}`, {
+        method: 'PATCH',
+      });
+      toast.success(`${file.fileName} added to Starred`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeFromStarred = async (file: dbFile) => {
+    try {
+      await fetch(
+        `http://localhost:4100/api/file/removeFromStarred/${file._id}`,
+        {
+          method: 'PATCH',
+        }
+      );
+      toast.success(`${file.fileName} removed from Starred`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const deleteFilePerm = async (
-    url: string,
+    file: dbFile,
     fileId: string,
     trashFiles: any,
     setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
   ) => {
     try {
-      await fetch(url, {
+      await fetch(`http://localhost:4100/api/file/permanent/${fileId}`, {
         method: 'DELETE',
       });
-      toast.success('File Deleted');
+      toast.success(`${file.fileName} Deleted Permanently`);
       setTrashFiles(
-        trashFiles.filter((file: any) => {
+        trashFiles.filter((file: dbFile) => {
           return file._id !== fileId;
         })
       );
@@ -84,7 +109,7 @@ export const useFileOperations = () => {
   };
 
   const restoreFile = async (
-    file: any,
+    file: dbFile,
     fileId: string,
     trashFiles: any,
     setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
@@ -101,6 +126,7 @@ export const useFileOperations = () => {
       if (data.status !== 'success') {
         throw new Error(data.message);
       }
+      toast.success(`${file.fileName} Restored`);
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -113,10 +139,10 @@ export const useFileOperations = () => {
   };
 
   const emptyTrash = async (
-    trashFiles: trashFile[],
+    trashFiles: dbFile[],
     setTrashFiles: React.Dispatch<React.SetStateAction<fileType[]>>
   ) => {
-    const trashFileIds = trashFiles.map((file: trashFile) => {
+    const trashFileIds = trashFiles.map((file: dbFile) => {
       return file._id;
     });
 
@@ -185,6 +211,8 @@ export const useFileOperations = () => {
   return {
     addFileDB,
     moveToTrashDB,
+    addToStarred,
+    removeFromStarred,
     deleteFilePerm,
     restoreFile,
     emptyTrash,

@@ -28,7 +28,7 @@ export const useLogin = () => {
         dispatch(loginFailure());
         throw new Error(data.message);
       }
-      toast.success('SignIn Successful');
+      toast.success('Signin Successful');
       dispatch(loginSuccess(data.user));
       setTimeout(() => {
         navigate('/home');

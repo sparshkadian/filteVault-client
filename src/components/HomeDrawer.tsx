@@ -7,6 +7,7 @@ import { useFileOperations } from '../hooks/useFileOperations';
 import { signOut } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import toast from 'react-hot-toast';
 
 const HomeDrawer = ({ icon }: { icon: string }) => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -107,44 +108,48 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
           </Link>
 
           {/* starred */}
-          <div className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'>
-            <img src='./star.png' alt='trash' width={15} />
+          <Link
+            to='/starred'
+            className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
+          >
+            <img src='./starred.png' alt='trash' width={15} />
             <p>Starred</p>
+          </Link>
+
+          {/* Trash */}
+          <Link
+            to='/trash'
+            className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
+          >
+            <img src='./trash.png' alt='trash' width={18} />
+            <p>Trash</p>
+          </Link>
+
+          {/* SignOut */}
+          <div
+            onClick={() => {
+              dispatch(signOut());
+              toast.success('User Signed Out');
+            }}
+            className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
+          >
+            <img src='./logout.png' alt='trash' width={18} />
+            <p>Sign out</p>
           </div>
-        </div>
 
-        {/* Trash */}
-        <Link
-          to='/trash'
-          className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
-        >
-          <img src='./trash.png' alt='trash' width={18} />
-          <p>Trash</p>
-        </Link>
-
-        {/* SignOut */}
-        <div
-          onClick={() => {
-            dispatch(signOut());
-          }}
-          className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
-        >
-          <img src='./logout.png' alt='trash' width={18} />
-          <p>Sign out</p>
-        </div>
-
-        {/* Delete Account */}
-        <div
-          onClick={async () => {
-            await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
-              method: 'DELETE',
-            });
-            dispatch(signOut());
-          }}
-          className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
-        >
-          <img src='./delete-acc.png' alt='trash' width={18} />
-          <p>Delete Account</p>
+          {/* Delete Account */}
+          <div
+            onClick={async () => {
+              await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+                method: 'DELETE',
+              });
+              dispatch(signOut());
+            }}
+            className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
+          >
+            <img src='./delete-acc.png' alt='trash' width={18} />
+            <p>Delete Account</p>
+          </div>
         </div>
       </Drawer>
     </>

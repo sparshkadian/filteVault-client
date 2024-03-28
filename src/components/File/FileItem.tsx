@@ -9,6 +9,7 @@ interface FileProps {
   fileName: string;
   mimeType: string;
   fileSize: number;
+  starred: boolean;
 }
 
 const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
@@ -16,7 +17,8 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
   layout,
 }) => {
   const { moveToTrash } = useContext(FileContext);
-  const { getFileDownloadUrl } = useFileOperations();
+  const { getFileDownloadUrl, addToStarred, removeFromStarred } =
+    useFileOperations();
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
 
@@ -82,7 +84,9 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className='px-2 rounded-md w-[160px] h-[160px] absolute top-2 right-[10px] bg-gray-200 shadow-xl z-10'
+            className={`${
+              file.starred ? 'w-[200px]' : 'w-[160px]'
+            } px-2 rounded-md h-[160px] absolute top-2 right-[10px] bg-gray-200 shadow-xl z-10`}
           >
             <div className='h-full w-full realtive'>
               <img
@@ -96,9 +100,22 @@ const FileItem: React.FC<{ file: FileProps; layout: string }> = ({
               />
 
               {/* starred */}
-              <div className='mt-10 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'>
-                <img src='./star.png' alt='trash' width={12} />
-                <p className='text-sm'>Add to Starred</p>
+              <div
+                onClick={() => {
+                  // @ts-ignore
+                  file.starred ? removeFromStarred(file) : addToStarred(file);
+                  closeFileOptions();
+                }}
+                className='mt-10 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+              >
+                <img
+                  src={file.starred ? './starred.png' : './nonStarred.png'}
+                  alt='trash'
+                  width={12}
+                />
+                <p className='text-sm'>
+                  {file.starred ? 'Remove from Starred' : 'Add to Starred'}
+                </p>
               </div>
 
               {/* Trash */}
