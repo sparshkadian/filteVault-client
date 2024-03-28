@@ -6,8 +6,9 @@ import { FileContext } from '../context/FileContext';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { signOut } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import { useSelector } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const HomeDrawer = ({ icon }: { icon: string }) => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -20,6 +21,36 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
   const [barsClicked, setBarsClicked] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const deleteAccount = async () => {
+    try {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+          setTimeout(() => {
+            dispatch(signOut());
+          }, 1000);
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your Account has been deleted.',
+            icon: 'success',
+          });
+        }
+      });
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   if (file) {
     addFile(file);
@@ -139,11 +170,8 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
 
           {/* Delete Account */}
           <div
-            onClick={async () => {
-              await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
-                method: 'DELETE',
-              });
-              dispatch(signOut());
+            onClick={() => {
+              deleteAccount();
             }}
             className='mt-3 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 hover:text-black transition-all ease-in-out duration-300 py-1 px-3'
           >

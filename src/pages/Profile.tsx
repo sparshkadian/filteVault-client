@@ -51,7 +51,7 @@ const Profile = () => {
             alt='avatar'
             width={120}
             height={120}
-            className='mix-blend-multiply'
+            className='rounded-full'
           />
           <input
             onChange={handleFileChange}

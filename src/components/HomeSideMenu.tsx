@@ -8,6 +8,7 @@ import { signOut } from '../redux/user/userSlice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const HomeSideMenu = () => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -16,6 +17,36 @@ const HomeSideMenu = () => {
   const { addFileToFirestore } = useFileOperations();
   const [file, setFile] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
+
+  const deleteAccount = async () => {
+    try {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+            method: 'DELETE',
+          });
+          setTimeout(() => {
+            dispatch(signOut());
+          }, 1000);
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your Account has been deleted.',
+            icon: 'success',
+          });
+        }
+      });
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
 
   if (file) {
     addFile(file);
@@ -110,11 +141,8 @@ const HomeSideMenu = () => {
 
       {/* Delete Account */}
       <div
-        onClick={async () => {
-          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
-            method: 'DELETE',
-          });
-          dispatch(signOut());
+        onClick={() => {
+          deleteAccount();
         }}
         className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-red-300 transition-all ease-in-out duration-300 py-1 px-3'
       >
