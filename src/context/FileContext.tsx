@@ -2,6 +2,7 @@ import { createContext, useState } from 'react';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { useSelector } from 'react-redux';
 import { dbFile } from '../types';
+import toast from 'react-hot-toast';
 
 interface FileContextType {
   files: dbFile[];
@@ -43,11 +44,12 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
     addFileDB(`http://localhost:4100/api/file/${currentUser._id}`, newFile);
   };
 
-  const moveToTrash = (fileId: string) => {
-    moveToTrashDB(`http://localhost:4100/api/file/${fileId}`);
+  const moveToTrash = (fileArg: dbFile) => {
+    toast.success(`${fileArg.fileName} moved to trash`);
+    moveToTrashDB(`http://localhost:4100/api/file/${fileArg._id}`);
     setFiles(
       files.filter((file) => {
-        return file._id !== fileId;
+        return file._id !== fileArg._id;
       })
     );
   };

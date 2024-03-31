@@ -116,7 +116,7 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
               <div
                 onClick={() => {
                   // @ts-ignore
-                  moveToTrash(file._id);
+                  moveToTrash(file);
                   closeFileOptions();
                 }}
                 className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
