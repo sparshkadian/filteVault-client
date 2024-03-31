@@ -50,9 +50,12 @@ export const useFileOperations = () => {
 
   const addToStarred = async (file: dbFile) => {
     try {
-      await fetch(`http://localhost:4100/api/file/addToStarred/${file._id}`, {
-        method: 'PATCH',
-      });
+      await fetch(
+        `https://filevault.onrender.com/api/file/addToStarred/${file._id}`,
+        {
+          method: 'PATCH',
+        }
+      );
       toast.success(`${file.fileName} added to Starred`);
     } catch (error) {
       console.log(error);
@@ -68,7 +71,7 @@ export const useFileOperations = () => {
   ) => {
     try {
       await fetch(
-        `http://localhost:4100/api/file/removeFromStarred/${file._id}`,
+        `https://filevault.onrender.com/api/file/removeFromStarred/${file._id}`,
         {
           method: 'PATCH',
         }
@@ -93,9 +96,12 @@ export const useFileOperations = () => {
     setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
     try {
-      await fetch(`http://localhost:4100/api/file/permanent/${fileId}`, {
-        method: 'DELETE',
-      });
+      await fetch(
+        `https://filevault.onrender.com/api/file/permanent/${fileId}`,
+        {
+          method: 'DELETE',
+        }
+      );
       toast.success(`${file.fileName} Deleted Permanently`);
       setTrashFiles(
         trashFiles.filter((file: dbFile) => {
@@ -116,7 +122,7 @@ export const useFileOperations = () => {
   ) => {
     try {
       const res = await fetch(
-        `http://localhost:4100/api/file/moveOutOfTrash/${file._id}`,
+        `https://filevault.onrender.com/api/file/moveOutOfTrash/${file._id}`,
         {
           method: 'PATCH',
         }
@@ -152,9 +158,12 @@ export const useFileOperations = () => {
       return file._id;
     });
 
-    await fetch(`http://localhost:4100/api/file/emptyTrash/${trashFileIds}`, {
-      method: 'DELETE',
-    });
+    await fetch(
+      `https://filevault.onrender.com/api/file/emptyTrash/${trashFileIds}`,
+      {
+        method: 'DELETE',
+      }
+    );
     setTrashFiles([]);
     toast.success('Trash Empty');
   };

@@ -33,7 +33,7 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     profileUpdate(
-      `http://localhost:4100/api/user/${currentUser._id}`,
+      `https://filevault.onrender.com/api/user/${currentUser._id}`,
       formData
     );
   };

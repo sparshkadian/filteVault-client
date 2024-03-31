@@ -13,7 +13,7 @@ const TrashFiles = () => {
   useEffect(() => {
     const getTrashFiles = async () => {
       const res = await fetch(
-        `http://localhost:4100/api/file/trashFiles/${currentUser._id}`
+        `https://filevault.onrender.com/api/file/trashFiles/${currentUser._id}`
       );
       const data = await res.json();
       setTrashFiles(data.files);
