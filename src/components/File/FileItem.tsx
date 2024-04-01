@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useContext } from 'react';
 import { FileContext } from '../../context/FileContext';
 import { useFileOperations } from '../../hooks/useFileOperations';
 import { checkMimeType } from '../../utils/checkMimeType';
 import { dbFile } from '../../types';
+import DownloadUrlModal from '../Modals/DownloadUrlModal';
 
 const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
   file,
@@ -15,6 +15,7 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
     useFileOperations();
   const divRef = useRef<HTMLDivElement | null>(null);
   const [openFileOptions, setOpenFileOptions] = useState(false);
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
 
   function closeFileOptions() {
     if (divRef.current) {
@@ -127,8 +128,10 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
 
               {/* Download */}
               <div
-                onClick={() => {
-                  getFileDownloadUrl(file.fileName);
+                onClick={async () => {
+                  const url: string = await getFileDownloadUrl(file.fileName);
+                  console.log('hello');
+                  setDownloadUrl(url);
                   closeFileOptions();
                 }}
                 className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
@@ -139,6 +142,12 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
             </div>
           </motion.div>
         </AnimatePresence>
+      )}
+      {downloadUrl && (
+        <DownloadUrlModal
+          downloadUrl={downloadUrl}
+          setDownloadUrl={setDownloadUrl}
+        />
       )}
     </div>
   );

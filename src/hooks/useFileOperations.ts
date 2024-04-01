@@ -11,6 +11,14 @@ import { app } from '../firebase.config';
 import { dbFile } from '../types';
 
 export const useFileOperations = () => {
+  const checkIOS = (resolve: any, url: string) => {
+    if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
+      resolve(url);
+    } else {
+      window.open(url);
+    }
+  };
+
   const { currentUser } = useSelector((state: any) => state.user);
   const addFileDB = async (url: string, fileData: dbFile) => {
     try {
@@ -178,15 +186,18 @@ export const useFileOperations = () => {
     });
   };
 
-  const getFileDownloadUrl = (fileName: string) => {
+  const getFileDownloadUrl = async (fileName: string) => {
     const storage = getStorage(app);
-    getDownloadURL(ref(storage, `${currentUser.email}/${fileName}`))
-      .then((url) => {
-        window.open(url);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return new Promise<string>((resolve, reject) =>
+      getDownloadURL(ref(storage, `${currentUser.email}/${fileName}`))
+        .then((url) => {
+          checkIOS(resolve, url);
+        })
+        .catch((error) => {
+          console.log(error);
+          reject(error);
+        })
+    );
   };
 
   const changeProfilePicture = (file: File): Promise<string> => {
