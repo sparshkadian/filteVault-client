@@ -3,7 +3,9 @@ import FileList from './File/FileList';
 import { useState } from 'react';
 
 const FileGallery = () => {
-  const [layout, setLayout] = useState('grid');
+  const [layout, setLayout] = useState(
+    window.localStorage.getItem('layout') || 'grid'
+  );
   const [searchFile, setSearchFile] = useState<string>('');
 
   return (
@@ -15,6 +17,7 @@ const FileGallery = () => {
         <div className='bg-gray-100 rounded-full max-w-[100px] mx-auto mt-4  flex items-center'>
           <div
             onClick={() => {
+              window.localStorage.setItem('layout', 'list');
               setLayout('list');
             }}
             className={`${
@@ -31,6 +34,7 @@ const FileGallery = () => {
 
           <div
             onClick={() => {
+              window.localStorage.setItem('layout', 'grid');
               setLayout('grid');
             }}
             className={`${
