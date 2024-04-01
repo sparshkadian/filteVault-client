@@ -1,7 +1,7 @@
 import { Modal } from 'antd';
-import { useFileOperations } from '../hooks/useFileOperations';
+import { useFileOperations } from '../../hooks/useFileOperations';
 import { useState } from 'react';
-import { dbFile } from '../types';
+import { dbFile } from '../../types';
 
 const EmptyTrashModal = ({
   trashFiles,

@@ -3,8 +3,7 @@ import { useState, useEffect } from 'react';
 import { checkMimeType } from '../utils/checkMimeType';
 import { useSelector } from 'react-redux';
 import { useFileOperations } from '../hooks/useFileOperations';
-// import { Modal } from 'antd';
-import EmptyTrashModal from '../components/EmptyTrashModal';
+import EmptyTrashModal from '../components/Modals/EmptyTrashModal';
 
 const TrashFiles = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -105,7 +104,13 @@ const TrashFiles = () => {
                 {/* Delete Permanently */}
                 <div
                   onClick={() => {
-                    deleteFilePerm(file, file._id, trashFiles, setTrashFiles);
+                    if (
+                      confirm(
+                        'Are you sure u want to permanently delete this file? You wont be able to restore it.'
+                      )
+                    ) {
+                      deleteFilePerm(file, file._id, trashFiles, setTrashFiles);
+                    }
                   }}
                   className='mt-7 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
                 >
