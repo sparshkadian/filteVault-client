@@ -52,7 +52,7 @@ const TrashFiles = () => {
       )}
 
       {/* Trash Div */}
-      <div className='mt-10 max-w-5xl mx-auto p-2 flex gap-10 flex-wrap'>
+      <div className='mt-10 max-w-5xl mx-auto p-2 flex gap-10 flex-wrap items-center justify-center'>
         {trashFiles.map((file) => (
           <div
             key={file._id}

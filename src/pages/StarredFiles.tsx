@@ -38,7 +38,7 @@ const StarredFiles = () => {
         </div>
       )}
 
-      <div className='mt-[150px] max-w-5xl mx-auto p-2 flex gap-10 flex-wrap'>
+      <div className='mt-[150px] max-w-5xl mx-auto p-2 flex gap-10 flex-wrap items-center justify-center'>
         {starredFiles.map((file: any) => (
           <div
             key={file._id}

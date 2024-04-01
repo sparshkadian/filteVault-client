@@ -3,10 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  overflow: hidden;
-}
-
 .roboto-font {
   font-family: 'Roboto', sans-serif;
 }
