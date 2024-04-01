@@ -3,12 +3,20 @@ import { useState, useEffect } from 'react';
 import { checkMimeType } from '../utils/checkMimeType';
 import { useSelector } from 'react-redux';
 import { useFileOperations } from '../hooks/useFileOperations';
+// import { Modal } from 'antd';
+import EmptyTrashModal from '../components/EmptyTrashModal';
 
 const TrashFiles = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { deleteFilePerm, restoreFile, emptyTrash } = useFileOperations();
   const [openFileOptions, setOpenFileOptions] = useState(false);
   const [trashFiles, setTrashFiles] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEmptyTrashModalOpen, setIsEmptyTrashModalOpen] = useState(false);
+
+  const showEmptyTrashModal = () => {
+    setIsEmptyTrashModalOpen(true);
+  };
 
   useEffect(() => {
     const getTrashFiles = async () => {
@@ -23,12 +31,21 @@ const TrashFiles = () => {
 
   return (
     <>
+      {isEmptyTrashModalOpen && (
+        <EmptyTrashModal
+          trashFiles={trashFiles}
+          setTrashFiles={setTrashFiles}
+          modalOpen={isEmptyTrashModalOpen}
+          setIsEmptyTrashModalOpen={setIsEmptyTrashModalOpen}
+        />
+      )}
+
       {/* Empty Trash Div */}
       <div className='text-xs bg-gray-200 rounded-md mt-[120px] max-w-5xl mx-auto flex justify-between items-center px-3 py-1'>
         <p>Items in the trash will be deleted forever after 30 days</p>
         <button
           onClick={() => {
-            emptyTrash(trashFiles, setTrashFiles);
+            showEmptyTrashModal();
           }}
           className='hover:bg-gray-300 p-2 rounded-full transition-all duration-300 ease-in-out'
         >
