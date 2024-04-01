@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useRef } from 'react';
 
 const DownloadUrlModal = ({
   downloadUrl,
@@ -8,13 +7,8 @@ const DownloadUrlModal = ({
   downloadUrl: string;
   setDownloadUrl: (downloadUrl: string) => void;
 }) => {
-  const divRef = useRef<HTMLDivElement | null>(null);
-
   return (
-    <div
-      ref={divRef}
-      className='flex flex-col items-center justify-center gap-2 rounded-md shadow-md w-[380px] h-[250px] bg-gray-200 fixed convert_modal p-5'
-    >
+    <div className='flex flex-col items-center justify-center gap-2 rounded-md shadow-md w-[380px] h-[250px] bg-gray-200 fixed convert_modal p-5'>
       <p className='text-lg font-semibold'>Click Link to Download File</p>
       <Link
         to={downloadUrl}
