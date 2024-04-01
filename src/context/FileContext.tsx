@@ -28,7 +28,9 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   const [files, setFiles] = useState<dbFile[]>([]);
 
   const getUserFiles = async (userId: string) => {
-    const res = await fetch(`http://localhost:4100/api/file/${userId}`);
+    const res = await fetch(
+      `https://filevault.onrender.com/api/file/${userId}`
+    );
     const data = await res.json();
     setFiles(data.files);
   };
@@ -41,12 +43,15 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
     };
     setFiles((prev) => [...prev, newFile]);
 
-    addFileDB(`http://localhost:4100/api/file/${currentUser._id}`, newFile);
+    addFileDB(
+      `https://filevault.onrender.com/api/file/${currentUser._id}`,
+      newFile
+    );
   };
 
   const moveToTrash = (fileArg: dbFile) => {
     toast.success(`${fileArg.fileName} moved to trash`);
-    moveToTrashDB(`http://localhost:4100/api/file/${fileArg._id}`);
+    moveToTrashDB(`https://filevault.onrender.com/api/file/${fileArg._id}`);
     setFiles(
       files.filter((file) => {
         return file._id !== fileArg._id;
