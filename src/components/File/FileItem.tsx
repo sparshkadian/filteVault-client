@@ -133,7 +133,6 @@ const FileItem: React.FC<{
               <div
                 onClick={async () => {
                   const url: string = await getFileDownloadUrl(file.fileName);
-                  console.log('hello');
                   setDownloadUrl(url);
                   closeFileOptions();
                 }}

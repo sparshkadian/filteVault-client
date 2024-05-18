@@ -3,12 +3,14 @@ import { useSelector } from 'react-redux';
 import { checkMimeType } from '../utils/checkMimeType';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { dbFile } from '../types';
+import DownloadUrlModal from '../components/Modals/DownloadUrlModal';
 
 const StarredFiles = () => {
   const { currentUser } = useSelector((state: any) => state.user);
-  const { removeFromStarred } = useFileOperations();
+  const { removeFromStarred, getFileDownloadUrl } = useFileOperations();
   const [starredFiles, setStarredFiles] = useState<dbFile[]>([]);
   const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
+  const [downloadUrl, setDownloadUrl] = useState<string>('');
 
   useEffect(() => {
     const getStarredFiles = async () => {
@@ -102,20 +104,29 @@ const StarredFiles = () => {
                   <img src='./starred.png' alt='trash' width={15} />
                   <p className='text-sm'>Remove from starred</p>
                 </div>
+
                 {/* download */}
-                {/* <div
-                  onClick={() => {
-                    getFileDownloadUrl(file.fileName);
+                <div
+                  onClick={async () => {
+                    const url: string = await getFileDownloadUrl(file.fileName);
+                    setDownloadUrl(url);
                   }}
                   className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
                 >
                   <img src='./download.png' alt='trash' width={15} />
                   <p className='text-sm'>download</p>
-                </div> */}
+                </div>
               </div>
             )}
           </div>
         ))}
+
+        {downloadUrl && (
+          <DownloadUrlModal
+            downloadUrl={downloadUrl}
+            setDownloadUrl={setDownloadUrl}
+          />
+        )}
       </div>
     </>
   );
