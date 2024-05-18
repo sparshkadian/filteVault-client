@@ -83,7 +83,7 @@ const FileItem: React.FC<{
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className={`${
-              file.starred ? 'w-[200px]' : 'w-[160px]'
+              file.starred ? 'w-[215px]' : 'w-[160px]'
             } px-2 rounded-md h-[160px] absolute top-2 right-[10px] bg-gray-200 shadow-xl z-10`}
           >
             <div className='h-full w-full realtive'>

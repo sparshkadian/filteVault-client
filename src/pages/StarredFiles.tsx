@@ -84,7 +84,6 @@ const StarredFiles = () => {
                   width={15}
                   className='absolute right-2 top-2 cursor-pointer'
                 />
-
                 {/* remove form starred */}
                 <div
                   onClick={() => {
@@ -103,9 +102,8 @@ const StarredFiles = () => {
                   <img src='./starred.png' alt='trash' width={15} />
                   <p className='text-sm'>Remove from starred</p>
                 </div>
-
-                {/* download */}
-                <div
+                {/* download */} //Need to set it up for ios devices as well
+                {/* <div
                   onClick={() => {
                     getFileDownloadUrl(file.fileName);
                   }}
@@ -113,7 +111,7 @@ const StarredFiles = () => {
                 >
                   <img src='./download.png' alt='trash' width={15} />
                   <p className='text-sm'>download</p>
-                </div>
+                </div> */}
               </div>
             )}
           </div>
