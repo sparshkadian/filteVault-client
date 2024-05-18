@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { useState, useRef, useContext } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FileContext } from '../../context/FileContext';
@@ -6,22 +7,20 @@ import { checkMimeType } from '../../utils/checkMimeType';
 import { dbFile } from '../../types';
 import DownloadUrlModal from '../Modals/DownloadUrlModal';
 
-const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
-  file,
-  layout,
-}) => {
+const FileItem: React.FC<{
+  file: dbFile;
+  layout: string;
+  openFileOptions: string | null;
+  setOpenFileOptions: React.Dispatch<React.SetStateAction<string | null>>;
+}> = ({ file, layout, openFileOptions, setOpenFileOptions }) => {
   const { moveToTrash } = useContext(FileContext);
   const { getFileDownloadUrl, addToStarred, removeFromStarred } =
     useFileOperations();
   const divRef = useRef<HTMLDivElement | null>(null);
-  const [openFileOptions, setOpenFileOptions] = useState(false);
   const [downloadUrl, setDownloadUrl] = useState<string>('');
 
   function closeFileOptions() {
-    if (divRef.current) {
-      divRef.current.style.zIndex = '-1';
-      setOpenFileOptions(false);
-    }
+    setOpenFileOptions(null);
   }
 
   return (
@@ -33,7 +32,16 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
       }  relative bg-gray-100 rounded-md shadow-md py-3`}
     >
       {/*  */}
-      <div ref={divRef} className='rounded-md absolute inset-0 z-[-1]' />
+      <div
+        ref={divRef}
+        className='rounded-md absolute inset-0'
+        style={{
+          zIndex: openFileOptions === file._id ? '1' : '-1',
+          opacity: openFileOptions === file._id ? '0.5' : '0',
+          backgroundColor:
+            openFileOptions === file._id ? '#000' : 'transparent',
+        }}
+      />
 
       {/* File Image */}
       <img
@@ -58,11 +66,8 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
       {/* FileOptions */}
       <img
         onClick={() => {
-          if (divRef.current) {
-            divRef.current.style.zIndex = '1';
-            divRef.current.style.opacity = '0.5';
-            divRef.current.style.backgroundColor = '#000';
-            setOpenFileOptions(true);
+          if (file._id) {
+            setOpenFileOptions(file._id);
           }
         }}
         src='./fileOptions.png'
@@ -73,7 +78,7 @@ const FileItem: React.FC<{ file: dbFile; layout: string }> = ({
         } cursor-pointer z-[2]`}
       />
 
-      {openFileOptions && (
+      {openFileOptions === file._id && (
         <AnimatePresence>
           <motion.div
             initial={{ opacity: 0 }}

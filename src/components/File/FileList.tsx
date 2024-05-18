@@ -1,11 +1,12 @@
 import FileItem from './FileItem';
-import { useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { FileContext } from '../../context/FileContext';
 import { useSelector } from 'react-redux';
 
 const FileList = ({ layout, query }: { layout: string; query: string }) => {
   const { files, getUserFiles } = useContext(FileContext);
   const { currentUser } = useSelector((state: any) => state.user);
+  const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
 
   useEffect(() => {
     getUserFiles(currentUser._id);
@@ -27,7 +28,15 @@ const FileList = ({ layout, query }: { layout: string; query: string }) => {
             .includes(query.trim().toLowerCase());
         })
         .map((file, i) => {
-          return <FileItem key={i} file={file} layout={layout} />;
+          return (
+            <FileItem
+              key={i}
+              file={file}
+              layout={layout}
+              openFileOptions={openFileOptions}
+              setOpenFileOptions={setOpenFileOptions}
+            />
+          );
         })}
     </div>
   );
