@@ -6,7 +6,7 @@ import { dbFile } from '../types';
 
 const StarredFiles = () => {
   const { currentUser } = useSelector((state: any) => state.user);
-  const { removeFromStarred, getFileDownloadUrl } = useFileOperations();
+  const { removeFromStarred } = useFileOperations();
   const [starredFiles, setStarredFiles] = useState<dbFile[]>([]);
   const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
 
@@ -102,7 +102,7 @@ const StarredFiles = () => {
                   <img src='./starred.png' alt='trash' width={15} />
                   <p className='text-sm'>Remove from starred</p>
                 </div>
-                {/* download */} //Need to set it up for ios devices as well
+                {/* download */}
                 {/* <div
                   onClick={() => {
                     getFileDownloadUrl(file.fileName);
