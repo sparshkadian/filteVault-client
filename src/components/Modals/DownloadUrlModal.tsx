@@ -8,7 +8,7 @@ const DownloadUrlModal = ({
   setDownloadUrl: (downloadUrl: string) => void;
 }) => {
   return (
-    <div className='flex flex-col items-center justify-center gap-2 rounded-md shadow-md w-[380px] h-[250px] bg-gray-200 fixed convert_modal p-5'>
+    <div className='z-10 flex flex-col items-center justify-center gap-2 rounded-md shadow-md w-[380px] h-[250px] bg-gray-200 fixed convert_modal p-5'>
       <p className='text-lg font-semibold'>Click Link to Download File</p>
       <Link
         to={downloadUrl}

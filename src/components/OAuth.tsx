@@ -42,7 +42,7 @@ const OAuth = () => {
       dispatch(googleSignInSuccess(data.user));
       navigate('/home');
     } catch (error: any) {
-      toast.error('Error with Google Auth', error.message);
+      toast.error('Error with Google Auth, Please Try Again!', error.message);
       dispatch(googleSignInFailure());
     }
   };
