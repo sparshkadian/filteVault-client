@@ -8,7 +8,7 @@ const StarredFiles = () => {
   const { currentUser } = useSelector((state: any) => state.user);
   const { removeFromStarred, getFileDownloadUrl } = useFileOperations();
   const [starredFiles, setStarredFiles] = useState<dbFile[]>([]);
-  const [openFileOptions, setOpenFileOptions] = useState(false);
+  const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
 
   useEffect(() => {
     const getStarredFiles = async () => {
@@ -39,11 +39,21 @@ const StarredFiles = () => {
       )}
 
       <div className='mt-[150px] max-w-5xl mx-auto p-2 flex gap-10 flex-wrap items-center justify-center'>
-        {starredFiles.map((file: any) => (
+        {starredFiles.map((file: dbFile) => (
           <div
             key={file._id}
             className='relative w-[250px] h-[250px] flex flex-col gap-3 items-center bg-gray-100 rounded-md shadow-md py-3'
           >
+            <div
+              style={{
+                zIndex: openFileOptions === file._id ? '1' : '-1',
+                opacity: openFileOptions === file._id ? '0.5' : '1',
+                backgroundColor:
+                  openFileOptions === file._id ? '#000' : 'transparent',
+              }}
+              className='absolute inset-0 bg-black rounded-md'
+            />
+
             <img
               src={checkMimeType(file.mimeType)}
               alt='file'
@@ -53,7 +63,11 @@ const StarredFiles = () => {
               {file.fileName}
             </p>
             <img
-              onClick={() => setOpenFileOptions(true)}
+              onClick={() => {
+                if (file._id) {
+                  setOpenFileOptions(file._id);
+                }
+              }}
               src='./fileOptions.png'
               alt='fileOptions'
               width={20}
@@ -61,10 +75,10 @@ const StarredFiles = () => {
             />
 
             {/* FileOptions */}
-            {openFileOptions && (
-              <div className='absolute rounded-md border-2 w-[200px] h-[120px] bg-gray-200 right-3'>
+            {openFileOptions === file._id && (
+              <div className='absolute z-[10] rounded-md border-2 w-[200px] h-[120px] bg-gray-200 right-3'>
                 <img
-                  onClick={() => setOpenFileOptions(false)}
+                  onClick={() => setOpenFileOptions(null)}
                   src='./close.png'
                   alt='close'
                   width={15}
@@ -74,14 +88,15 @@ const StarredFiles = () => {
                 {/* remove form starred */}
                 <div
                   onClick={() => {
-                    //@ts-ignore
-                    removeFromStarred(
-                      file,
-                      file._id,
-                      starredFiles,
-                      setStarredFiles,
-                      true
-                    );
+                    if (file._id) {
+                      removeFromStarred(
+                        file,
+                        file._id,
+                        starredFiles,
+                        setStarredFiles,
+                        true
+                      );
+                    }
                   }}
                   className='mt-7 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
                 >

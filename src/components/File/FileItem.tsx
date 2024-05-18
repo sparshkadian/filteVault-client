@@ -16,7 +16,6 @@ const FileItem: React.FC<{
   const { moveToTrash } = useContext(FileContext);
   const { getFileDownloadUrl, addToStarred, removeFromStarred } =
     useFileOperations();
-  const divRef = useRef<HTMLDivElement | null>(null);
   const [downloadUrl, setDownloadUrl] = useState<string>('');
 
   function closeFileOptions() {
@@ -33,7 +32,6 @@ const FileItem: React.FC<{
     >
       {/*  */}
       <div
-        ref={divRef}
         className='rounded-md absolute inset-0'
         style={{
           zIndex: openFileOptions === file._id ? '1' : '-1',
