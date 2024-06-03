@@ -11,11 +11,41 @@ import { app } from '../firebase.config';
 import { dbFile } from '../types';
 
 export const useFileOperations = () => {
-  const checkIOS = (resolve: any, url: string) => {
+  const updateFile = async (url: string, downloadLink: string) => {
+    console.log(url, downloadLink);
+    try {
+      const res = await fetch(url, {
+        method: 'PATCH',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: downloadLink,
+      });
+
+      const data = await res.json();
+      if (data.status !== 'success') {
+        throw new Error(data.message);
+      }
+      console.log(data.file);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
+  const checkIOS = async (
+    resolve: any,
+    downloadUrl: string,
+    fileId: string
+  ) => {
+    await updateFile(
+      `https://filevault.onrender.com/api/file/${fileId}`,
+      downloadUrl
+    );
     if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
-      resolve(url);
+      resolve(downloadUrl);
     } else {
-      window.open(url);
+      window.open(downloadUrl);
     }
   };
 
@@ -186,12 +216,12 @@ export const useFileOperations = () => {
     });
   };
 
-  const getFileDownloadUrl = async (fileName: string) => {
+  const getFileDownloadUrl = async (fileName: string, fileId: string) => {
     const storage = getStorage(app);
     return new Promise<string>((resolve, reject) =>
       getDownloadURL(ref(storage, `${currentUser.email}/${fileName}`))
         .then((url) => {
-          checkIOS(resolve, url);
+          checkIOS(resolve, url, fileId);
         })
         .catch((error) => {
           console.log(error);

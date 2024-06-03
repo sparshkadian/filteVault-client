@@ -132,7 +132,10 @@ const FileItem: React.FC<{
               {/* Download */}
               <div
                 onClick={async () => {
-                  const url: string = await getFileDownloadUrl(file.fileName);
+                  const url: string = await getFileDownloadUrl(
+                    file.fileName,
+                    file._id
+                  );
                   setDownloadUrl(url);
                   closeFileOptions();
                 }}
