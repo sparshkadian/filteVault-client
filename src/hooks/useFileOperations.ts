@@ -26,7 +26,6 @@ export const useFileOperations = () => {
       if (data.status !== 'success') {
         throw new Error(data.message);
       }
-      console.log(data.file);
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -216,12 +215,12 @@ export const useFileOperations = () => {
     });
   };
 
-  const getFileDownloadUrl = async (fileName: string, fileId: string) => {
+  const getFileDownloadUrl = async (fileName: string, fileId?: string) => {
     const storage = getStorage(app);
     return new Promise<string>((resolve, reject) =>
       getDownloadURL(ref(storage, `${currentUser.email}/${fileName}`))
         .then((url) => {
-          checkIOS(resolve, url, fileId);
+          if (fileId) checkIOS(resolve, url, fileId);
         })
         .catch((error) => {
           console.log(error);

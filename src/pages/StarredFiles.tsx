@@ -108,7 +108,10 @@ const StarredFiles = () => {
                 {/* download */}
                 <div
                   onClick={async () => {
-                    const url: string = await getFileDownloadUrl(file.fileName);
+                    const url: string = await getFileDownloadUrl(
+                      file.fileName,
+                      file._id
+                    );
                     setDownloadUrl(url);
                   }}
                   className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
