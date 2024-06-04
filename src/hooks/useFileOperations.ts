@@ -17,7 +17,6 @@ export const useFileOperations = () => {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
         },
         body: downloadLink,
       });
