@@ -12,12 +12,12 @@ import { dbFile } from '../types';
 
 export const useFileOperations = () => {
   const updateFile = async (url: string, downloadLink: string) => {
-    console.log(url, downloadLink);
     try {
       const res = await fetch(url, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
         },
         body: downloadLink,
       });
@@ -86,6 +86,7 @@ export const useFileOperations = () => {
   };
 
   const addToStarred = async (file: dbFile) => {
+    // dispatch an action to see immediat UI changes
     try {
       await fetch(
         `https://filevault.onrender.com/api/file/addToStarred/${file._id}`,

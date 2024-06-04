@@ -8,7 +8,9 @@ const FileList = ({ layout, query }: { layout: string; query: string }) => {
   const { currentUser } = useSelector((state: any) => state.user);
   const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
 
+  // Fetch from persisted local storage to avoid further API calls
   useEffect(() => {
+    // conditional logic to fetch form LS or make API call for first time
     getUserFiles(currentUser._id);
   }, []);
 

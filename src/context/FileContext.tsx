@@ -28,6 +28,7 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   const [files, setFiles] = useState<dbFile[]>([]);
 
   const getUserFiles = async (userId: string) => {
+    // get files and dispatch action to save files in LS
     const res = await fetch(
       `https://filevault.onrender.com/api/file/${userId}`
     );
