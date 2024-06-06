@@ -11,14 +11,16 @@ import { app } from '../firebase.config';
 import { dbFile } from '../types';
 
 export const useFileOperations = () => {
-  const updateFile = async (url: string, downloadLink: string) => {
+  // again dispatch to see immediate changes. Having to reload to bring new data
+  const updateFile = async (url: string, dataToSend: any) => {
+    console.log(dataToSend);
     try {
       const res = await fetch(url, {
         method: 'PATCH',
         headers: {
           'content-type': 'application/json',
         },
-        body: downloadLink,
+        body: JSON.stringify(dataToSend),
       });
 
       const data = await res.json();
@@ -33,17 +35,15 @@ export const useFileOperations = () => {
 
   const checkIOS = async (
     resolve: any,
-    downloadUrl: string,
+    downloadLink: string,
     fileId: string
   ) => {
-    await updateFile(
-      `https://filevault.onrender.com/api/file/${fileId}`,
-      downloadUrl
-    );
+    const data = { downloadLink };
+    await updateFile(`https://filevault.onrender.com/api/file/${fileId}`, data);
     if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
-      resolve(downloadUrl);
+      resolve(downloadLink);
     } else {
-      window.open(downloadUrl);
+      window.open(downloadLink);
     }
   };
 
@@ -274,5 +274,6 @@ export const useFileOperations = () => {
     addFileToFirestore,
     getFileDownloadUrl,
     changeProfilePicture,
+    updateFile,
   };
 };

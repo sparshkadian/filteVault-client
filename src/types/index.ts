@@ -7,6 +7,7 @@ export interface dbFile {
   starred?: boolean;
   inTrash?: boolean;
   downloadLink?: string;
+  description?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

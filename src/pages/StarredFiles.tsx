@@ -4,6 +4,7 @@ import { checkMimeType } from '../utils/checkMimeType';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { dbFile } from '../types';
 import DownloadUrlModal from '../components/Modals/DownloadUrlModal';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const StarredFiles = () => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -78,48 +79,62 @@ const StarredFiles = () => {
 
             {/* FileOptions */}
             {openFileOptions === file._id && (
-              <div className='absolute z-[10] rounded-md border-2 w-[200px] h-[120px] bg-gray-200 right-3'>
-                <img
-                  onClick={() => setOpenFileOptions(null)}
-                  src='./close.png'
-                  alt='close'
-                  width={15}
-                  className='absolute right-2 top-2 cursor-pointer'
-                />
-                {/* remove form starred */}
-                <div
-                  onClick={() => {
-                    if (file._id) {
-                      removeFromStarred(
-                        file,
-                        file._id,
-                        starredFiles,
-                        setStarredFiles,
-                        true
-                      );
-                    }
-                  }}
-                  className='mt-7 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+              <AnimatePresence>
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: '150px' }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className='absolute z-[10] rounded-md border-2 w-[200px] h-[150px] bg-gray-200 right-3'
                 >
-                  <img src='./starred.png' alt='trash' width={15} />
-                  <p className='text-sm'>Remove from starred</p>
-                </div>
+                  <img
+                    onClick={() => setOpenFileOptions(null)}
+                    src='./close.png'
+                    alt='close'
+                    width={13}
+                    className='absolute right-2 top-2 cursor-pointer'
+                  />
+                  {/* remove form starred */}
+                  <div
+                    onClick={() => {
+                      if (file._id) {
+                        removeFromStarred(
+                          file,
+                          file._id,
+                          starredFiles,
+                          setStarredFiles,
+                          true
+                        );
+                      }
+                    }}
+                    className='mt-7 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+                  >
+                    <img src='./starred.png' alt='trash' width={15} />
+                    <p className='text-sm'>Remove from starred</p>
+                  </div>
 
-                {/* download */}
-                <div
-                  onClick={async () => {
-                    const url: string = await getFileDownloadUrl(
-                      file.fileName,
-                      file._id
-                    );
-                    setDownloadUrl(url);
-                  }}
-                  className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
-                >
-                  <img src='./download.png' alt='trash' width={15} />
-                  <p className='text-sm'>download</p>
-                </div>
-              </div>
+                  {/* download */}
+                  <div
+                    onClick={async () => {
+                      const url: string = await getFileDownloadUrl(
+                        file.fileName,
+                        file._id
+                      );
+                      setDownloadUrl(url);
+                    }}
+                    className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'
+                  >
+                    <img src='./download.png' alt='trash' width={15} />
+                    <p className='text-sm'>download</p>
+                  </div>
+
+                  {/* File Information */}
+                  <div className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'>
+                    <img src='./file-info.png' alt='trash' width={15} />
+                    <p className='text-sm'>File Information</p>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
             )}
           </div>
         ))}

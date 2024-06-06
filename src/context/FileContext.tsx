@@ -39,7 +39,10 @@ export const FileProvider = ({ children }: { children: React.ReactNode }) => {
   const addFile = (file: File) => {
     const newFile = {
       fileName: file.name.split('.')[0],
-      fileSize: +(file.size / 1000000).toFixed(2),
+
+      // Need a better size calculating function -> give in bytes i.e /1024
+      // in MB if large again / 1024
+      fileSize: +(file.size / 1024).toFixed(2),
       mimeType: file.type,
     };
     setFiles((prev) => [...prev, newFile]);
