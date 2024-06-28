@@ -34,12 +34,9 @@ const HomeDrawer = ({ icon }: { icon: string }) => {
         confirmButtonText: 'Yes, delete it!',
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await fetch(
-            `https://filevault.onrender.com/api/user/${currentUser._id}`,
-            {
-              method: 'DELETE',
-            }
-          );
+          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+            method: 'DELETE',
+          });
           setTimeout(() => {
             dispatch(signOut());
           }, 1000);

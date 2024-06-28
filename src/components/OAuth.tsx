@@ -19,20 +19,17 @@ const OAuth = () => {
     try {
       const result = await signInWithPopup(auth, provider);
       dispatch(googleSignInStart());
-      const res = await fetch(
-        'https://filevault.onrender.com/api/auth/google',
-        {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-          },
-          body: JSON.stringify({
-            userName: result.user.displayName,
-            email: result.user.email,
-            avatar: result.user.photoURL,
-          }),
-        }
-      );
+      const res = await fetch('http://localhost:4100/api/auth/google', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName: result.user.displayName,
+          email: result.user.email,
+          avatar: result.user.photoURL,
+        }),
+      });
 
       const data = await res.json();
       if (data.status !== 'success') {

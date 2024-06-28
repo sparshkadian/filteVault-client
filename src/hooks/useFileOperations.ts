@@ -9,11 +9,14 @@ import {
 } from 'firebase/storage';
 import { app } from '../firebase.config';
 import { dbFile } from '../types';
+import { useDispatch } from 'react-redux';
+import { moveToTrash, updatedFiles } from '../redux/file/fileSlice';
+import { RootState } from '../redux/store';
 
 export const useFileOperations = () => {
-  // again dispatch to see immediate changes. Having to reload to bring new data
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
   const updateFile = async (url: string, dataToSend: any) => {
-    console.log(dataToSend);
     try {
       const res = await fetch(url, {
         method: 'PATCH',
@@ -27,6 +30,7 @@ export const useFileOperations = () => {
       if (data.status !== 'success') {
         throw new Error(data.message);
       }
+      dispatch(updatedFiles(data.files));
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -39,7 +43,7 @@ export const useFileOperations = () => {
     fileId: string
   ) => {
     const data = { downloadLink };
-    await updateFile(`https://filevault.onrender.com/api/file/${fileId}`, data);
+    await updateFile(`http://localhost:4100/api/file/${fileId}`, data);
     if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
       resolve(downloadLink);
     } else {
@@ -47,8 +51,7 @@ export const useFileOperations = () => {
     }
   };
 
-  const { currentUser } = useSelector((state: any) => state.user);
-  const addFileDB = async (url: string, fileData: dbFile) => {
+  const addFileDB = async (url: string, fileData: any) => {
     try {
       const res = await fetch(url, {
         method: 'POST',
@@ -78,6 +81,7 @@ export const useFileOperations = () => {
       if (data.status !== 'success') {
         throw new Error(data.message);
       }
+      dispatch(moveToTrash(data.files));
     } catch (error: any) {
       console.log(error);
       toast.error(error.message);
@@ -85,14 +89,16 @@ export const useFileOperations = () => {
   };
 
   const addToStarred = async (file: dbFile) => {
-    // dispatch an action to see immediat UI changes
     try {
-      await fetch(
-        `https://filevault.onrender.com/api/file/addToStarred/${file._id}`,
+      const res = await fetch(
+        `http://localhost:4100/api/file/addToStarred/${file._id}`,
         {
           method: 'PATCH',
         }
       );
+      const data = await res.json();
+      console.log(data.files);
+      dispatch(updatedFiles(data.files));
       toast.success(`${file.fileName} added to Starred`);
     } catch (error) {
       console.log(error);
@@ -108,7 +114,7 @@ export const useFileOperations = () => {
   ) => {
     try {
       await fetch(
-        `https://filevault.onrender.com/api/file/removeFromStarred/${file._id}`,
+        `http://localhost:4100/api/file/removeFromStarred/${file._id}`,
         {
           method: 'PATCH',
         }
@@ -133,12 +139,9 @@ export const useFileOperations = () => {
     setTrashFiles: React.Dispatch<React.SetStateAction<dbFile[]>>
   ) => {
     try {
-      await fetch(
-        `https://filevault.onrender.com/api/file/permanent/${fileId}`,
-        {
-          method: 'DELETE',
-        }
-      );
+      await fetch(`http://localhost:4100/api/file/permanent/${fileId}`, {
+        method: 'DELETE',
+      });
       toast.success(`${file.fileName} Deleted Permanently`);
       setTrashFiles(
         trashFiles.filter((file: dbFile) => {
@@ -159,7 +162,7 @@ export const useFileOperations = () => {
   ) => {
     try {
       const res = await fetch(
-        `https://filevault.onrender.com/api/file/moveOutOfTrash/${file._id}`,
+        `http://localhost:4100/api/file/moveOutOfTrash/${file._id}`,
         {
           method: 'PATCH',
         }
@@ -195,12 +198,9 @@ export const useFileOperations = () => {
       return file._id;
     });
 
-    await fetch(
-      `https://filevault.onrender.com/api/file/emptyTrash/${trashFileIds}`,
-      {
-        method: 'DELETE',
-      }
-    );
+    await fetch(`http://localhost:4100/api/file/emptyTrash/${trashFileIds}`, {
+      method: 'DELETE',
+    });
     setTrashFiles([]);
     toast.success('Trash Empty');
   };

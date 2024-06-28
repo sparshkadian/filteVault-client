@@ -1,8 +1,8 @@
-//@ts-nocheck
 import { useSelector } from 'react-redux';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { useProfileUpdate } from '../hooks/useProfileUpdate';
+import toast from 'react-hot-toast';
 
 const Profile = () => {
   const { currentUser } = useSelector((state: any) => state.user);
@@ -14,26 +14,48 @@ const Profile = () => {
     about: currentUser.about,
   });
   const [file, setFile] = useState<File | null>(null);
-  const fileRef = useRef<File | null>(null);
+  console.log(file);
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const { avatar, userName, about } = formData;
 
-  const handleFileChange = async (e) => {
-    const profilePicture = await changeProfilePicture(e.target.files[0]);
-    setFormData({ ...formData, avatar: profilePicture });
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
   };
 
-  const handleInputChange = (e) => {
+  const toastSytling = { backgroundColor: 'black', color: 'white' };
+
+  useEffect(() => {
+    if (file) {
+      const uploadFile = async () => {
+        toast('Uploading Profile Picture', { style: toastSytling });
+        const profilePicture = await changeProfilePicture(file);
+        setFormData({ ...formData, avatar: profilePicture });
+        setFile(null);
+        toast('Upload complete', { style: toastSytling });
+        setTimeout(() => {
+          toast('Click on save changes to Persist', { style: toastSytling });
+        }, 500);
+      };
+      uploadFile();
+    }
+  }, [file]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     profileUpdate(
-      `https://filevault.onrender.com/api/user/${currentUser._id}`,
+      `http://localhost:4100/api/user/${currentUser._id}`,
       formData
     );
   };
@@ -100,8 +122,8 @@ const Profile = () => {
             onChange={handleInputChange}
             name='about'
             id='about'
-            cols='30'
-            rows='5'
+            cols={30}
+            rows={5}
             value={about}
             className='border-2 rounded-md w-full p-1'
           ></textarea>

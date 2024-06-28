@@ -30,12 +30,9 @@ const HomeSideMenu = () => {
         confirmButtonText: 'Yes, delete it!',
       }).then(async (result) => {
         if (result.isConfirmed) {
-          await fetch(
-            `https://filevault.onrender.com/api/user/${currentUser._id}`,
-            {
-              method: 'DELETE',
-            }
-          );
+          await fetch(`http://localhost:4100/api/user/${currentUser._id}`, {
+            method: 'DELETE',
+          });
           setTimeout(() => {
             dispatch(signOut());
           }, 1000);
@@ -66,12 +63,12 @@ const HomeSideMenu = () => {
   return (
     <div className='w-[220px] p-2 pl-3 hidden 860:flex flex-col gap-3'>
       {/* Logo */}
-      <div className='ml-3 mt-2 flex items-center gap-3'>
+      <Link to='/' className='ml-3 mt-2 flex items-center gap-3'>
         <img src='./vault.png' alt='logo' width={30} />
         <p className='text-lg'>
           File <span className='text-blue-500 font-semibold'>Vault</span>
         </p>
-      </div>
+      </Link>
 
       {/* Form */}
       <form>
@@ -93,15 +90,6 @@ const HomeSideMenu = () => {
         <img src='./plus.png' alt='trash' width={18} />
         <p>New</p>
       </div>
-
-      {/* Home */}
-      <Link
-        to='/'
-        className='cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-200 transition-all ease-in-out duration-300 py-1 px-3'
-      >
-        <img src='./home.png' alt='trash' width={18} />
-        <p>Home</p>
-      </Link>
 
       {/* User Profile */}
       <Link
