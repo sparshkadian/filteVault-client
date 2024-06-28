@@ -16,7 +16,7 @@ const StarredFiles = () => {
   useEffect(() => {
     const getStarredFiles = async () => {
       const res = await fetch(
-        `https://filevault.onrender.com/api/file/starredFiles/${currentUser._id}`
+        `http://localhost:4100/api/file/starredFiles/${currentUser._id}`
       );
       const data = await res.json();
       setStarredFiles(data.files);

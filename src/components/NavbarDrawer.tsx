@@ -14,8 +14,6 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
     setWidth(window.innerWidth);
   });
 
-  // setBarsClicked need to be set to false again when width > 640
-
   const showDrawer = () => {
     setBarsClicked(true);
     setOpen(true);
@@ -56,7 +54,7 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
               </Link>
             </>
           ) : (
-            <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-4 items-center'>
               <Link to='/profile' className='self-center'>
                 <img
                   src={currentUser.avatar}
@@ -67,7 +65,10 @@ const NavbarDrawer = ({ icon }: { icon: string }) => {
                 />
               </Link>
               <Link to='/home'>
-                <button className='nav__button w-full'>View Files</button>
+                <button className='nav__button w-[150px]'>View Files</button>
+              </Link>
+              <Link to='/contact'>
+                <button className='nav__button w-[150px]'>Contact</button>
               </Link>
             </div>
           )}

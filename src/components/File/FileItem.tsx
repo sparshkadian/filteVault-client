@@ -36,6 +36,19 @@ const FileItem: React.FC<{
     };
   }, []);
 
+  const checkDownloadUrlExists = async (file: dbFile) => {
+    if (file.downloadLink) {
+      if (/iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase())) {
+        setDownloadUrl(file.downloadLink);
+      } else {
+        window.open(file.downloadLink);
+      }
+    } else {
+      const url: string = await getFileDownloadUrl(file.fileName, file._id);
+      setDownloadUrl(url);
+    }
+  };
+
   return (
     <>
       <div
@@ -139,7 +152,6 @@ const FileItem: React.FC<{
                 {/* Trash */}
                 <div
                   onClick={() => {
-                    // @ts-ignore
                     moveToTrash(file);
                     closeFileOptions();
                   }}
@@ -152,11 +164,7 @@ const FileItem: React.FC<{
                 {/* Download */}
                 <div
                   onClick={async () => {
-                    const url: string = await getFileDownloadUrl(
-                      file.fileName,
-                      file._id
-                    );
-                    setDownloadUrl(url);
+                    checkDownloadUrlExists(file);
                     closeFileOptions();
                   }}
                   className='mt-2 cursor-pointer flex gap-3 items-center rounded-full hover:bg-gray-300 transition-all ease-in-out duration-300 py-1 px-3'

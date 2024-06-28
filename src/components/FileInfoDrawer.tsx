@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Drawer } from 'antd';
 import { useFileOperations } from '../hooks/useFileOperations';
 import { modifyDate } from '../utils/modifyCreatedAtDate';
+import toast from 'react-hot-toast';
 
 const FileInfoDrawer: React.FC<{
   file: dbFile | null;
@@ -11,7 +12,7 @@ const FileInfoDrawer: React.FC<{
   setOpenFileInfoDrawer: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ file, openFileInfoDrawer, setOpenFileInfoDrawer }) => {
   const [open, setOpen] = useState(false);
-  const [description, setDescription] = useState<string>(file?.description); //get from file.Description
+  const [description, setDescription] = useState<string>(file.description); //get from file.Description
   const { getFileDownloadUrl, updateFile } = useFileOperations();
 
   useEffect(() => {
@@ -44,12 +45,8 @@ const FileInfoDrawer: React.FC<{
   const handleFormSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = { description };
-    await updateFile(
-      `https://filevault.onrender.com/api/file/${file?._id}`,
-      data
-    );
-    window.location.reload(); // need to do it -> no action dispatch mechanism in place
-    // to see immediate UI changes.
+    await updateFile(`http://localhost:4100/api/file/${file._id}`, data);
+    toast.success('File Description Changed');
   };
 
   return (
@@ -74,13 +71,13 @@ const FileInfoDrawer: React.FC<{
           <p>Starred: {file?.starred ? 'Yes' : 'No'}</p>
 
           {/* User may download from here even before DL is in DB. so add logic. */}
-          {/* If no DL call downloadFile from firebase or if present proceed */}
+          {/* If no DL, call downloadFile from firebase or if present proceed */}
           <p className='flex gap-1'>
             Download File:{' '}
             <div className='flex items-center gap-1'>
               <span
                 onClick={() => {
-                  downloadFile(file?.fileName, file?._id, file?.downloadLink);
+                  downloadFile(file.fileName, file._id, file.downloadLink);
                 }}
                 className='text-blue-500 cursor-pointer'
               >
@@ -95,7 +92,7 @@ const FileInfoDrawer: React.FC<{
           </p>
           <p>Uploaded On:&nbsp; {modifyDate(file?.createdAt)}</p>
 
-          {/* File Description -> Problem in backend. Fix that first */}
+          {/* File Description */}
           <div className='flex flex-col gap-2'>
             <p>Description:</p>
             <form onSubmit={handleFormSubmit} className='w-full'>

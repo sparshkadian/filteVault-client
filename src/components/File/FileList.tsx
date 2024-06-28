@@ -2,15 +2,15 @@ import FileItem from './FileItem';
 import { useState, useContext, useEffect } from 'react';
 import { FileContext } from '../../context/FileContext';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 const FileList = ({ layout, query }: { layout: string; query: string }) => {
-  const { files, getUserFiles } = useContext(FileContext);
-  const { currentUser } = useSelector((state: any) => state.user);
+  const { getUserFiles } = useContext(FileContext);
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const files = useSelector((state: RootState) => state.file.files);
   const [openFileOptions, setOpenFileOptions] = useState<string | null>(null);
 
-  // Fetch from persisted local storage to avoid further API calls
   useEffect(() => {
-    // conditional logic to fetch form LS or make API call for first time
     getUserFiles(currentUser._id);
   }, []);
 

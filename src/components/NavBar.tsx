@@ -40,6 +40,9 @@ const NavBar = () => {
               <Link to='/home'>
                 <button className='nav__button w-full'>View Files</button>
               </Link>
+              <Link to='/Contact'>
+                <button className='nav__button w-full'>Contact</button>
+              </Link>
             </div>
           )}
         </>
