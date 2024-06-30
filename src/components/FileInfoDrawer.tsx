@@ -45,7 +45,10 @@ const FileInfoDrawer: React.FC<{
   const handleFormSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const data = { description };
-    await updateFile(`http://localhost:4100/api/file/${file._id}`, data);
+    await updateFile(
+      `https://filevault.onrender.com/api/file/${file._id}`,
+      data
+    );
     toast.success('File Description Changed');
   };
 
